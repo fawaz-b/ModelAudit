@@ -1,3 +1,4 @@
+
 """PDF ingestion, text extraction, and document chunking."""
 
 import hashlib
@@ -62,12 +63,21 @@ def extract_pdf_text(content: bytes) -> tuple[list[dict], int]:
                 raise PDFIngestionError("PDF contains no pages.")
 
             if page_count > MAX_PDF_PAGES:
-                raise PDFIngestionError(f"PDF exceeds the {MAX_PDF_PAGES}-page limit.")
+                raise PDFIngestionError(
+                    f"PDF exceeds the {MAX_PDF_PAGES}-page limit."
+                )
 
             pages = []
 
-            for page_number, page in enumerate(document, start=1):
-                text = page.get_text("text").strip()
+            for page_index in range(page_count):
+                page = document.load_page(page_index)
+                page_number = page_index + 1
+                extracted = page.get_text("text")
+
+                if not isinstance(extracted, str):
+                    raise PDFIngestionError("Unable to extract text from PDF page.")
+
+                text = extracted.strip()
 
                 pages.append(
                     {

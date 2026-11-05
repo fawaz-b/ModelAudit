@@ -1,0 +1,1177 @@
+{
+  "schema_version": "1.0.0",
+  "framework": "TRIPOD+AI",
+  "framework_version": "BMJ 2024;385:e078378 (Collins et al); expanded checklist (Explanation and Elaboration Light) version 7-February-2024",
+  "attribution": "Item identifiers and official item wording are from Collins GS, Moons KGM, Dhiman P, et al. TRIPOD+AI statement: updated guidance for reporting clinical prediction models that use regression or machine learning methods. BMJ 2024;385:e078378, published under CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/). Elaboration points are paraphrased from the TRIPOD+AI Expanded Checklist (Explanation and Elaboration Light), https://www.tripod-statement.org/wp-content/uploads/2024/04/TRIPODAI-Supplement.pdf. ModelAudit prompts, elements, rules and examples are original to this project and are not part of TRIPOD+AI.",
+  "field_provenance": {
+    "id": "modelaudit",
+    "framework": "source",
+    "framework_version": "source",
+    "section": "source",
+    "source_item_reference": "source",
+    "official_item_text": "source (kept for identification only)",
+    "applies_to": "source (D;E marking in Table 2)",
+    "reporting_expectations": "paraphrase of expanded checklist; entries prefixed [E&E] follow the source, entries prefixed [INTERP] are interpretation",
+    "elements": "modelaudit operational decomposition of the source item",
+    "assessment_prompt": "modelaudit",
+    "evidence_requirements": "modelaudit",
+    "retrieval_queries": "modelaudit",
+    "common_misinterpretations": "modelaudit",
+    "item_rules": "modelaudit",
+    "judgement_categories": "modelaudit, values defined in judgement_scheme",
+    "illustrative_examples": "modelaudit, synthetic, not taken from any paper"
+  },
+  "judgement_scheme": {
+    "categories": {
+      "reported": "Every required element is supported by a verified quotation from the main text.",
+      "partially_reported": "At least one required element is supported and at least one required element is missing or only vaguely addressed.",
+      "author_stated_unavailable": "The authors explicitly state that the information is unknown, unavailable or not applicable (TRIPOD+AI asks authors to acknowledge this). This is reporting-compliant but must be shown to the reviewer as a distinct state.",
+      "not_found_in_main_text": "No supporting passage was found in the main text. This does not show the information is absent from supplementary material, a protocol or a registry entry.",
+      "unclear": "Excerpts conflict, are too ambiguous to judge, or retrieval may have missed the relevant passage.",
+      "not_applicable": "The item does not apply to this study design under the rules in item_rules."
+    },
+    "category_derivation": "Derived deterministically in Python from applicable element findings and evidence verification. LLM-proposed categories are retained only as reviewer-visible cross-checks.",
+    "element_statuses": [
+      "reported",
+      "partially_reported",
+      "author_stated_unavailable",
+      "not_found_in_main_text",
+      "unclear",
+      "not_applicable"
+    ]
+  },
+  "global_rules": [
+    "Judge only from the excerpts supplied. Never use prior knowledge of the paper or of the model.",
+    "TRIPOD+AI assesses completeness of reporting. It does not assess whether the methods were good. Never comment on methodological quality or bias in a TRIPOD+AI judgement.",
+    "Only the main text is available. Never conclude that information is absent from the study, only that it was not found in the main text.",
+    "Every claim of reported must cite a verbatim quotation of at most 300 characters from a supplied excerpt, with its chunk_id and page.",
+    "A quotation that exists in the paper is not enough. It must directly support the specific element being judged.",
+    "Judge each element separately and list the elements you could not judge.",
+    "Do not use the words valid, validated or ready for use about any model. Use the word evaluation instead of validation."
+  ],
+  "judge_prompt_template": "You are assisting a human reviewer who is checking the completeness of reporting in a clinical prediction model paper against one TRIPOD+AI item. Item: {id} - {official_item_text}. Task: {assessment_prompt}. Elements to judge: {elements_block}. Study type confirmed by the reviewer: {study_type}. Rules: {global_rules_block} Item-specific rules: {item_rules_block} Excerpts follow, each with chunk_id and page. Return only the JSON object that matches the required output schema.",
+  "items": [
+    {
+      "id": "T-3b",
+      "framework": "TRIPOD+AI",
+      "framework_version": "BMJ 2024;385:e078378; E&E Light 7-Feb-2024",
+      "section": "Introduction / Background",
+      "source_reference": "Collins et al BMJ 2024;385:e078378, Table 2",
+      "source_item_reference": "TRIPOD+AI item 3b; Expanded Checklist p1",
+      "official_item_text": "Describe the target population and the intended purpose of the prediction model in the context of the care pathway, including its intended users (e.g., healthcare professionals, patients, public)",
+      "applies_to": [
+        "development",
+        "evaluation"
+      ],
+      "assessment_prompt": "Determine whether the paper states the target population the model is intended for, the intended purpose (the clinical decision or guidance supported and the point in the care pathway), and the intended users.",
+      "reporting_expectations": [
+        "[E&E] State who the target population is, for example an age group, a country or people with a specific disease.",
+        "[E&E] State the intended purpose, including the clinical decision or guidance the model supports (such as referral for testing, admission, triage, starting treatment or changing lifestyle) and the point in the care pathway where it would be used.",
+        "[E&E] State who the intended users are (healthcare professionals, patients, the public or others)."
+      ],
+      "elements": [
+        {
+          "key": "target_population",
+          "description": "Population the model is intended for, stated as distinct from the study sample",
+          "required": true
+        },
+        {
+          "key": "intended_purpose_and_pathway_position",
+          "description": "Decision or guidance supported and where in the care pathway",
+          "required": true
+        },
+        {
+          "key": "intended_users",
+          "description": "Who will use the model",
+          "required": true
+        }
+      ],
+      "evidence_requirements": [
+        "A passage naming the population the model is meant for.",
+        "A passage naming the decision or purpose and the pathway position.",
+        "A passage naming the intended users."
+      ],
+      "retrieval_queries": [
+        "intended use of the prediction model in the clinical pathway",
+        "target population for which the model is intended",
+        "intended users clinicians patients decision support",
+        "model to support triage referral admission or treatment decision"
+      ],
+      "common_misinterpretations": [
+        "The study sample described in Methods is not automatically the target population. Accept it only if the text says the model is intended for that population.",
+        "General motivation such as improving outcomes is not an intended purpose unless a decision or use is named.",
+        "A future-use statement in the Discussion can count only if it is explicit about decision, pathway position or users. Record which element it covers.",
+        "A tool or app name does not show who the intended users are."
+      ],
+      "item_rules": [],
+      "judgement_categories": [
+        "reported",
+        "partially_reported",
+        "author_stated_unavailable",
+        "not_found_in_main_text",
+        "unclear"
+      ],
+      "illustrative_examples": {
+        "sufficient": "The model is intended for adults attending primary care clinics in Nigeria, to help nurses decide on referral for confirmatory blood pressure measurement.",
+        "insufficient": "We developed a model to improve hypertension care.",
+        "provenance": "synthetic, written by ModelAudit"
+      }
+    },
+    {
+      "id": "T-5a",
+      "framework": "TRIPOD+AI",
+      "framework_version": "BMJ 2024;385:e078378; E&E Light 7-Feb-2024",
+      "section": "Methods / Data",
+      "source_reference": "Collins et al BMJ 2024;385:e078378, Table 2",
+      "source_item_reference": "TRIPOD+AI item 5a; Expanded Checklist p2",
+      "official_item_text": "Describe the sources of data separately for the development and evaluation datasets (e.g., randomised trial, cohort, routine care or registry data), the rationale for using these data, and representativeness of the data",
+      "applies_to": [
+        "development",
+        "evaluation"
+      ],
+      "assessment_prompt": "Determine whether the paper states the type of data source for each dataset used, and gives a rationale for using it or a statement about how representative it is of the intended target population.",
+      "reporting_expectations": [
+        "[E&E] Describe the source of data for model development and for evaluation, such as a randomised trial, cohort, registry or electronic routine healthcare records.",
+        "[E&E] State whether existing data were used or new data were collected prospectively for this study.",
+        "[E&E] Where existing data were collected for another purpose, give the rationale and comment on suitability and representativeness for the intended target population, particularly if data come from a different setting or country.",
+        "[E&E] Describe sources separately for development and evaluation. If synthetic data were used, explain why and how they were created.",
+        "[INTERP] A statement about representativeness may be a limitation or caveat as well as an affirmation."
+      ],
+      "elements": [
+        {
+          "key": "data_source_type",
+          "description": "Design or origin of each dataset (trial, cohort, registry, routine records, survey)",
+          "required": true
+        },
+        {
+          "key": "rationale_or_representativeness",
+          "description": "Why these data were used or how representative they are of the target population",
+          "required": true
+        },
+        {
+          "key": "existing_or_prospective",
+          "description": "Whether data were existing or prospectively collected",
+          "required": false
+        },
+        {
+          "key": "separate_for_development_and_evaluation",
+          "description": "Sources described separately for each dataset",
+          "required": true,
+          "applies_when": {
+            "field": "has_separate_evaluation_dataset",
+            "operator": "equals",
+            "value": true
+          }
+        },
+        {
+          "key": "synthetic_data_details",
+          "description": "Reasons and method if synthetic data were used",
+          "required": true,
+          "applies_when": {
+            "field": "synthetic_data_used",
+            "operator": "equals",
+            "value": true
+          }
+        }
+      ],
+      "evidence_requirements": [
+        "A passage naming the design or origin of each dataset.",
+        "A passage justifying the data or discussing representativeness for the target population.",
+        "For studies with separate development and evaluation data, a source description for each."
+      ],
+      "retrieval_queries": [
+        "data source cohort registry survey electronic health records",
+        "study design and data collection",
+        "representativeness of the data for the target population",
+        "external evaluation dataset source"
+      ],
+      "common_misinterpretations": [
+        "Naming a dataset (for example a survey acronym) without saying what kind of data source it is gives only part of the first element.",
+        "Representativeness concerns the target population, not sample size.",
+        "Evaluation data may be described only in Results or a later Methods subsection. Search both.",
+        "If one dataset is used for both development and internal evaluation, separate descriptions are not required, but the dataset must be described."
+      ],
+      "item_rules": [
+        "If the study uses a single dataset with no separate evaluation dataset, do not require separate sources. Mark separate_for_development_and_evaluation as not_applicable."
+      ],
+      "judgement_categories": [
+        "reported",
+        "partially_reported",
+        "author_stated_unavailable",
+        "not_found_in_main_text",
+        "unclear"
+      ],
+      "illustrative_examples": {
+        "sufficient": "We used a nationally representative household survey collected for other purposes. We considered it suitable because sampling covered all regions of the target country.",
+        "insufficient": "Data came from a national survey.",
+        "provenance": "synthetic, written by ModelAudit"
+      }
+    },
+    {
+      "id": "T-5b",
+      "framework": "TRIPOD+AI",
+      "framework_version": "BMJ 2024;385:e078378; E&E Light 7-Feb-2024",
+      "section": "Methods / Data",
+      "source_reference": "Collins et al BMJ 2024;385:e078378, Table 2",
+      "source_item_reference": "TRIPOD+AI item 5b; Expanded Checklist p2",
+      "official_item_text": "Specify the dates of the collected participant data, including start and end of participant accrual; and, if applicable, end of follow-up",
+      "applies_to": [
+        "development",
+        "evaluation"
+      ],
+      "assessment_prompt": "Determine whether the paper gives the start and end of the period over which participant data were collected or selected, and, for prognostic models, the end of follow-up.",
+      "reporting_expectations": [
+        "[E&E] Specify the start and end dates of the period for which participants or data were selected.",
+        "[E&E] For prognostic models, report the date of end of follow-up.",
+        "[INTERP] When development and evaluation data are separate, dates are expected for each."
+      ],
+      "elements": [
+        {
+          "key": "collection_start_and_end",
+          "description": "Start and end of the period over which participant data were collected or selected",
+          "required": true
+        },
+        {
+          "key": "end_of_follow_up",
+          "description": "Date of end of follow-up",
+          "required": true,
+          "applies_when": {
+            "field": "study_type",
+            "operator": "equals",
+            "value": "prognostic"
+          }
+        },
+        {
+          "key": "dates_for_each_dataset",
+          "description": "Dates given for each dataset",
+          "required": true,
+          "applies_when": {
+            "field": "has_separate_evaluation_dataset",
+            "operator": "equals",
+            "value": true
+          }
+        }
+      ],
+      "evidence_requirements": [
+        "A passage with a start and an end for the data collection or selection period.",
+        "For prognostic models, a passage giving when follow-up ended."
+      ],
+      "retrieval_queries": [
+        "participants were enrolled between",
+        "data were collected from January to December",
+        "study period start and end dates",
+        "end of follow-up date"
+      ],
+      "common_misinterpretations": [
+        "Publication date, access date or database extraction date is not the data collection period.",
+        "A single year is a start without an end. Look for a range.",
+        "A follow-up duration (for example 28 days) is not a date of end of follow-up. Treat it as partial for the follow-up element.",
+        "For repeated cross-sectional surveys, the survey years are the collection period."
+      ],
+      "item_rules": [
+        "Accept year-level ranges as sufficient and record the granularity in the rationale (see unresolved question 2)."
+      ],
+      "judgement_categories": [
+        "reported",
+        "partially_reported",
+        "author_stated_unavailable",
+        "not_found_in_main_text",
+        "unclear"
+      ],
+      "illustrative_examples": {
+        "sufficient": "Participants were enrolled between January 2015 and December 2017, with follow-up to 31 December 2018.",
+        "insufficient": "Data were obtained from a hospital database.",
+        "provenance": "synthetic, written by ModelAudit"
+      }
+    },
+    {
+      "id": "T-6a",
+      "framework": "TRIPOD+AI",
+      "framework_version": "BMJ 2024;385:e078378; E&E Light 7-Feb-2024",
+      "section": "Methods / Participants",
+      "source_reference": "Collins et al BMJ 2024;385:e078378, Table 2",
+      "source_item_reference": "TRIPOD+AI item 6a; Expanded Checklist p2",
+      "official_item_text": "Specify key elements of the study setting (e.g., primary care, secondary care, general population) including the number and location of centres",
+      "applies_to": [
+        "development",
+        "evaluation"
+      ],
+      "assessment_prompt": "Determine whether the paper states the healthcare setting where participants were recruited, the geographical location (at least the country), and the number of centres.",
+      "reporting_expectations": [
+        "[E&E] Describe the healthcare setting and where participants were recruited from.",
+        "[E&E] Report the geographical location, at a minimum the country, and the centres including the number of centres.",
+        "[INTERP] For non-centre-based sources such as national household surveys, a centre count may not be meaningful."
+      ],
+      "elements": [
+        {
+          "key": "setting_type",
+          "description": "Primary care, secondary care, general population or similar",
+          "required": true
+        },
+        {
+          "key": "country_or_location",
+          "description": "Country at minimum, ideally region or sites",
+          "required": true
+        },
+        {
+          "key": "number_of_centres",
+          "description": "Number of centres or sites",
+          "required": true,
+          "applies_when": {
+            "field": "multiple_or_identifiable_centres",
+            "operator": "equals",
+            "value": true
+          }
+        }
+      ],
+      "evidence_requirements": [
+        "A passage naming the setting type.",
+        "A passage naming the country or location of data collection.",
+        "A passage giving the number of centres, or a statement that it was a single centre."
+      ],
+      "retrieval_queries": [
+        "study setting primary care secondary care hospital community",
+        "participants were recruited from centres in",
+        "multicentre number of hospitals and country",
+        "geographical location of the study"
+      ],
+      "common_misinterpretations": [
+        "Author affiliations are not the study location.",
+        "The word multicentre without a number gives only part of the centres element.",
+        "A single centre named in the text counts as a centre count of one.",
+        "The country of the original development cohort may differ from the country of the evaluation cohort. Judge the dataset the paper is describing."
+      ],
+      "item_rules": [
+        "If data are not centre-based (for example a population survey), mark number_of_centres not_applicable and judge only setting and location."
+      ],
+      "judgement_categories": [
+        "reported",
+        "partially_reported",
+        "author_stated_unavailable",
+        "not_found_in_main_text",
+        "unclear"
+      ],
+      "illustrative_examples": {
+        "sufficient": "Participants attended outpatient clinics at four tertiary hospitals in Lagos, Nigeria.",
+        "insufficient": "This was a multicentre study.",
+        "provenance": "synthetic, written by ModelAudit"
+      }
+    },
+    {
+      "id": "T-6b",
+      "framework": "TRIPOD+AI",
+      "framework_version": "BMJ 2024;385:e078378; E&E Light 7-Feb-2024",
+      "section": "Methods / Participants",
+      "source_reference": "Collins et al BMJ 2024;385:e078378, Table 2",
+      "source_item_reference": "TRIPOD+AI item 6b; Expanded Checklist p2-3",
+      "official_item_text": "Describe the eligibility criteria for study participants",
+      "applies_to": [
+        "development",
+        "evaluation"
+      ],
+      "assessment_prompt": "Determine whether the paper states explicit eligibility criteria (inclusion and/or exclusion), including any restriction on continuous variables such as an age range.",
+      "reporting_expectations": [
+        "[E&E] Report the eligibility criteria so that readers can judge applicability and generalisability of the model.",
+        "[E&E] This includes any restriction of continuous variables, for example the age range used to define eligibility."
+      ],
+      "elements": [
+        {
+          "key": "eligibility_criteria",
+          "description": "Explicit inclusion and/or exclusion criteria",
+          "required": true
+        },
+        {
+          "key": "continuous_variable_restrictions",
+          "description": "Age range or other numeric restrictions",
+          "required": true,
+          "applies_when": {
+            "field": "eligibility_uses_continuous_restriction",
+            "operator": "equals",
+            "value": true
+          }
+        }
+      ],
+      "evidence_requirements": [
+        "A passage listing who was included and who was excluded, or stating that all consecutive eligible people were included together with the entry condition."
+      ],
+      "retrieval_queries": [
+        "inclusion criteria exclusion criteria participants",
+        "eligible participants aged",
+        "patients were excluded if",
+        "flow diagram of participants excluded"
+      ],
+      "common_misinterpretations": [
+        "A flow diagram listing exclusion counts and reasons can serve as evidence, but only if the reasons are readable in the excerpts.",
+        "The statement that all patients were included is not a criterion unless the entry condition is stated.",
+        "Exclusions applied after data cleaning (for example missing data) are not eligibility criteria unless the paper presents them as such. Record the distinction.",
+        "Age range given only in a results table of characteristics is not an eligibility restriction."
+      ],
+      "item_rules": [],
+      "judgement_categories": [
+        "reported",
+        "partially_reported",
+        "author_stated_unavailable",
+        "not_found_in_main_text",
+        "unclear"
+      ],
+      "illustrative_examples": {
+        "sufficient": "Adults aged 18 to 80 years with a first hospital admission were eligible. Patients on chronic dialysis were excluded.",
+        "insufficient": "Eligible patients were included in the study.",
+        "provenance": "synthetic, written by ModelAudit"
+      }
+    },
+    {
+      "id": "T-8a",
+      "framework": "TRIPOD+AI",
+      "framework_version": "BMJ 2024;385:e078378; E&E Light 7-Feb-2024",
+      "section": "Methods / Outcome",
+      "source_reference": "Collins et al BMJ 2024;385:e078378, Table 2",
+      "source_item_reference": "TRIPOD+AI item 8a; Expanded Checklist p3",
+      "official_item_text": "Clearly define the outcome that is being predicted and the time horizon, including how and when assessed, the rationale for choosing this outcome, and whether the method of outcome assessment is consistent across sociodemographic groups",
+      "applies_to": [
+        "development",
+        "evaluation"
+      ],
+      "assessment_prompt": "Determine whether the paper defines the predicted outcome, states how and when it was assessed, and, for prognostic models, gives the time horizon. Record separately whether a rationale and consistency across sociodemographic groups are addressed.",
+      "reporting_expectations": [
+        "[E&E] For diagnostic models, define the outcome clearly, including whether a widely accepted reference standard was used.",
+        "[E&E] For prognostic models, report the time horizon of prediction and the frequency of outcome assessment during follow-up.",
+        "[E&E] If standard definitions such as ICD codes are used, state and reference them.",
+        "[E&E] Report any discrepancies in outcome assessment across sociodemographic groups.",
+        "[E&E] Where needed, confirm that no predictors were used to define the outcome or act as a proxy for it.",
+        "[INTERP] The rationale and the sociodemographic consistency statement are part of the official item wording but are treated as non-required elements in the MVP so that the category stays informative."
+      ],
+      "elements": [
+        {
+          "key": "outcome_definition",
+          "description": "What the outcome is, including threshold or reference standard",
+          "required": true
+        },
+        {
+          "key": "how_outcome_assessed",
+          "description": "Method or source used to determine the outcome",
+          "required": true
+        },
+        {
+          "key": "timing_or_time_horizon",
+          "description": "When assessed; time horizon of prediction for prognostic models",
+          "required": true
+        },
+        {
+          "key": "standard_definition_cited",
+          "description": "Use of a standard definition or code with a reference",
+          "required": false
+        },
+        {
+          "key": "rationale_for_outcome",
+          "description": "Why this outcome or definition was chosen",
+          "required": false
+        },
+        {
+          "key": "consistency_across_groups",
+          "description": "Statement on whether assessment was consistent across sociodemographic groups",
+          "required": false
+        },
+        {
+          "key": "predictors_not_in_outcome",
+          "description": "Statement that predictors were not used to define the outcome",
+          "required": false
+        }
+      ],
+      "evidence_requirements": [
+        "A passage defining the outcome precisely enough to be reproduced.",
+        "A passage stating how and when the outcome was determined.",
+        "For prognostic models, a passage stating the prediction time horizon."
+      ],
+      "retrieval_queries": [
+        "outcome definition primary outcome was defined as",
+        "outcome ascertainment reference standard how outcome was assessed",
+        "time horizon follow-up period for the outcome",
+        "mortality within days of admission definition"
+      ],
+      "common_misinterpretations": [
+        "Naming the outcome (for example mortality) is not defining it. Look for the definition, timing and method.",
+        "A time horizon is required for prognostic models only. For diagnostic models the reference standard plays that role.",
+        "Outcome labels in a results table do not show how the outcome was assessed.",
+        "Do not infer consistency across groups from silence."
+      ],
+      "item_rules": [
+        "Use the study profile to decide whether the model is diagnostic or prognostic. If uncertain, mark timing_or_time_horizon unclear and flag for the reviewer."
+      ],
+      "judgement_categories": [
+        "reported",
+        "partially_reported",
+        "author_stated_unavailable",
+        "not_found_in_main_text",
+        "unclear"
+      ],
+      "illustrative_examples": {
+        "sufficient": "The outcome was all-cause in-hospital death during the index admission, ascertained from hospital records, with no censoring.",
+        "insufficient": "The outcome was mortality.",
+        "provenance": "synthetic, written by ModelAudit"
+      }
+    },
+    {
+      "id": "T-9b",
+      "framework": "TRIPOD+AI",
+      "framework_version": "BMJ 2024;385:e078378; E&E Light 7-Feb-2024",
+      "section": "Methods / Predictors",
+      "source_reference": "Collins et al BMJ 2024;385:e078378, Table 2",
+      "source_item_reference": "TRIPOD+AI item 9b; Expanded Checklist p4",
+      "official_item_text": "Clearly define all predictors, including how and when they were measured (and any actions to blind assessment of predictors for the outcome and other predictors)",
+      "applies_to": [
+        "development",
+        "evaluation"
+      ],
+      "assessment_prompt": "Determine whether all predictors are clearly defined with units or categories, and whether how and when they were measured is stated, relative to when the model is intended to be used.",
+      "reporting_expectations": [
+        "[E&E] Define all predictors included in the modelling, with units of measurement and all categories for categorical predictors, so others can replicate, implement or evaluate the model.",
+        "[E&E] Describe how and when predictor values were measured. Predictors should be measured before or at the time the model is intended to be used.",
+        "[E&E] Report actions to blind predictor assessment to other predictors and, for diagnostic models, to the outcome.",
+        "[E&E] When there are very many predictors, a full list in supplementary material is acceptable if all are still clearly defined."
+      ],
+      "elements": [
+        {
+          "key": "predictor_list_and_definitions",
+          "description": "Every predictor in the final or evaluated model is named and defined",
+          "required": true
+        },
+        {
+          "key": "units_and_categories",
+          "description": "Units of measurement and categories for categorical predictors",
+          "required": true
+        },
+        {
+          "key": "how_measured",
+          "description": "Instrument, method or data source for each predictor",
+          "required": true
+        },
+        {
+          "key": "when_measured",
+          "description": "Timing of measurement relative to the intended moment of use",
+          "required": true
+        },
+        {
+          "key": "blinding_of_predictor_assessment",
+          "description": "Actions to blind predictor assessment",
+          "required": false,
+          "applies_when": {
+            "field": "predictor_assessment_requires_interpretation",
+            "operator": "equals",
+            "value": true
+          }
+        }
+      ],
+      "evidence_requirements": [
+        "A passage or table that names every predictor with its definition.",
+        "A passage or table giving units or categories.",
+        "A passage stating how and when predictors were measured."
+      ],
+      "retrieval_queries": [
+        "predictors candidate variables definitions units",
+        "predictors were measured at admission",
+        "table of predictor variables and categories",
+        "features used as input to the model"
+      ],
+      "common_misinterpretations": [
+        "A list of variable names alone does not define them, state units or say how they were measured.",
+        "A table of baseline characteristics is not necessarily a predictor definition table. Check that the variables are the model inputs.",
+        "A final model with many predictors may list them in supplementary material. If only that is available, use not_found_in_main_text and say so.",
+        "Timing relative to intended use is required, not just a calendar timing."
+      ],
+      "item_rules": [],
+      "judgement_categories": [
+        "reported",
+        "partially_reported",
+        "author_stated_unavailable",
+        "not_found_in_main_text",
+        "unclear"
+      ],
+      "illustrative_examples": {
+        "sufficient": "Systolic blood pressure (mmHg) was measured with a validated oscillometric device at triage, before any treatment. Smoking was coded never, former or current.",
+        "insufficient": "Clinical and laboratory variables were used as predictors.",
+        "provenance": "synthetic, written by ModelAudit"
+      }
+    },
+    {
+      "id": "T-10",
+      "framework": "TRIPOD+AI",
+      "framework_version": "BMJ 2024;385:e078378; E&E Light 7-Feb-2024",
+      "section": "Methods / Sample size",
+      "source_reference": "Collins et al BMJ 2024;385:e078378, Table 2",
+      "source_item_reference": "TRIPOD+AI item 10; Expanded Checklist p5",
+      "official_item_text": "Explain how the study size was arrived at (separately for development and evaluation), and justify that the study size was sufficient to answer the research question. Include details of any sample size calculation",
+      "applies_to": [
+        "development",
+        "evaluation"
+      ],
+      "assessment_prompt": "Determine whether the paper explains how the study size was arrived at and justifies that it was sufficient, including any sample size calculation or its inputs.",
+      "reporting_expectations": [
+        "[E&E] Describe how sample size was determined, separately for development and for evaluation, whether data were collected prospectively or already existed.",
+        "[E&E] Give details and all estimates used in any sample size calculation.",
+        "[E&E] If no formal calculation was done, for example because all available data were used, justify why the size was sufficient to answer the research question."
+      ],
+      "elements": [
+        {
+          "key": "how_size_was_determined",
+          "description": "Statement of how the study size was arrived at",
+          "required": true
+        },
+        {
+          "key": "justification_of_sufficiency",
+          "description": "Calculation with inputs, or a justification that the size suffices",
+          "required": true
+        },
+        {
+          "key": "separate_for_development_and_evaluation",
+          "description": "Sample size reasoning given for each stage",
+          "required": true,
+          "applies_when": {
+            "field": "has_separate_evaluation_dataset",
+            "operator": "equals",
+            "value": true
+          }
+        }
+      ],
+      "evidence_requirements": [
+        "A passage about sample size or sample size calculation.",
+        "A passage justifying sufficiency, not merely stating the number analysed."
+      ],
+      "retrieval_queries": [
+        "sample size calculation events per predictor",
+        "sample size was determined by availability of data",
+        "sufficient sample size to develop or evaluate the model",
+        "minimum sample size criteria"
+      ],
+      "common_misinterpretations": [
+        "Reporting that N participants were analysed is a result, not an explanation of how study size was arrived at.",
+        "Using all available data is acceptable only if the paper also justifies sufficiency.",
+        "A limitation sentence about small sample size acknowledges a problem but does not justify the size. Record it as partial at most.",
+        "Do not judge whether the sample size was adequate. That is a PROBAST+AI question, not a TRIPOD+AI one."
+      ],
+      "item_rules": [
+        "If the study has no separate evaluation dataset, mark separate_for_development_and_evaluation not_applicable."
+      ],
+      "judgement_categories": [
+        "reported",
+        "partially_reported",
+        "author_stated_unavailable",
+        "not_found_in_main_text",
+        "unclear"
+      ],
+      "illustrative_examples": {
+        "sufficient": "No formal calculation was done. All 3,204 eligible patients were used. We judged this sufficient because the number of outcome events exceeded the minimum implied by the criteria of Riley and colleagues for 12 candidate predictors.",
+        "insufficient": "The sample size was adequate.",
+        "provenance": "synthetic, written by ModelAudit"
+      }
+    },
+    {
+      "id": "T-11",
+      "framework": "TRIPOD+AI",
+      "framework_version": "BMJ 2024;385:e078378; E&E Light 7-Feb-2024",
+      "section": "Methods / Missing data",
+      "source_reference": "Collins et al BMJ 2024;385:e078378, Table 2",
+      "source_item_reference": "TRIPOD+AI item 11; Expanded Checklist p5",
+      "official_item_text": "Describe how missing data were handled. Provide reasons for omitting any data",
+      "applies_to": [
+        "development",
+        "evaluation"
+      ],
+      "assessment_prompt": "Determine whether the paper describes how missing data were handled, gives reasons for omitting any participants or predictors, and gives details of any imputation.",
+      "reporting_expectations": [
+        "[E&E] Report, for each predictor considered, the number of missing values.",
+        "[E&E] Report how missing values were handled, including assumptions about why they were missing.",
+        "[E&E] If individuals or predictors were omitted because of missing values, report this and give reasons.",
+        "[E&E] If values were imputed, give full details of the imputation method and confirm it was done separately for training and test data."
+      ],
+      "elements": [
+        {
+          "key": "handling_method",
+          "description": "Complete-case, imputation, indicator method or other approach",
+          "required": true
+        },
+        {
+          "key": "extent_of_missingness",
+          "description": "Amount of missing data, overall or per predictor",
+          "required": false
+        },
+        {
+          "key": "reasons_for_omitting_data",
+          "description": "Reasons any participants or predictors were omitted",
+          "required": true,
+          "applies_when": {
+            "field": "data_omitted_due_to_missingness",
+            "operator": "equals",
+            "value": true
+          }
+        },
+        {
+          "key": "imputation_details",
+          "description": "Imputation method and settings",
+          "required": true,
+          "applies_when": {
+            "field": "imputation_used",
+            "operator": "equals",
+            "value": true
+          }
+        },
+        {
+          "key": "no_leakage_between_training_and_test",
+          "description": "Statement that imputation was done separately for training and test data",
+          "required": false,
+          "applies_when": {
+            "field": "imputation_with_data_partitioning",
+            "operator": "equals",
+            "value": true
+          }
+        }
+      ],
+      "evidence_requirements": [
+        "A passage describing the missing-data approach.",
+        "If participants were excluded for missing data, a passage giving the reason or rule."
+      ],
+      "retrieval_queries": [
+        "missing data handled multiple imputation complete case analysis",
+        "participants with missing values were excluded",
+        "proportion of missing values per variable",
+        "imputation was performed separately in training and test sets"
+      ],
+      "common_misinterpretations": [
+        "A statement that there were no missing data is a valid report if it is explicit. Record as reported or author_stated_unavailable as appropriate.",
+        "Missing data counts in a characteristics table do not describe how they were handled.",
+        "Exclusions listed in a flow diagram for missing data count as reasons for omitting data.",
+        "Do not judge whether the approach was appropriate. That is a PROBAST+AI question."
+      ],
+      "item_rules": [],
+      "judgement_categories": [
+        "reported",
+        "partially_reported",
+        "author_stated_unavailable",
+        "not_found_in_main_text",
+        "unclear"
+      ],
+      "illustrative_examples": {
+        "sufficient": "Predictors with more than 30 percent missing values were dropped. Remaining missing values (2 to 11 percent) were imputed by multiple imputation with chained equations (20 imputations), fitted in the training data only.",
+        "insufficient": "Missing data were handled appropriately.",
+        "provenance": "synthetic, written by ModelAudit"
+      }
+    },
+    {
+      "id": "T-12e",
+      "framework": "TRIPOD+AI",
+      "framework_version": "BMJ 2024;385:e078378; E&E Light 7-Feb-2024",
+      "section": "Methods / Analytical methods",
+      "source_reference": "Collins et al BMJ 2024;385:e078378, Table 2",
+      "source_item_reference": "TRIPOD+AI item 12e; Expanded Checklist p7",
+      "official_item_text": "Specify all measures and plots used (and their rationale) to evaluate model performance (e.g., discrimination, calibration, clinical utility) and, if relevant, to compare multiple models",
+      "applies_to": [
+        "development",
+        "evaluation"
+      ],
+      "assessment_prompt": "Determine whether the Methods specify the performance measures and plots used, including discrimination and calibration, and the methods used to compare models when more than one is evaluated.",
+      "reporting_expectations": [
+        "[E&E] Report all measures used to evaluate model performance. As a minimum, discrimination and calibration (including calibration plots) are generally expected.",
+        "[E&E] For time-to-event outcomes, describe how censoring and any competing risks were handled.",
+        "[E&E] For prognostic models, report all time points at which performance was evaluated.",
+        "[E&E] Report the methods used for graphical displays such as calibration plots with smooth curves and decision curves.",
+        "[E&E] If models are compared, explain the comparison methods and the criteria for judging one superior."
+      ],
+      "elements": [
+        {
+          "key": "discrimination_measure",
+          "description": "Discrimination measure named, such as the c-statistic or AUC",
+          "required": true
+        },
+        {
+          "key": "calibration_measure_or_plot",
+          "description": "Calibration assessment named, such as slope, intercept or calibration plot",
+          "required": true
+        },
+        {
+          "key": "other_measures_clinical_utility",
+          "description": "Other measures such as net benefit or classification metrics",
+          "required": false
+        },
+        {
+          "key": "time_points_evaluated",
+          "description": "Time points at which performance was assessed",
+          "required": true,
+          "applies_when": {
+            "field": "study_type",
+            "operator": "equals",
+            "value": "prognostic"
+          }
+        },
+        {
+          "key": "model_comparison_methods",
+          "description": "How multiple models were compared and the criteria",
+          "required": true,
+          "applies_when": {
+            "field": "multiple_models_evaluated",
+            "operator": "equals",
+            "value": true
+          }
+        }
+      ],
+      "evidence_requirements": [
+        "A Methods passage listing the performance measures.",
+        "A passage naming how calibration was assessed."
+      ],
+      "retrieval_queries": [
+        "model performance was assessed using discrimination and calibration",
+        "c-statistic AUC calibration slope calibration plot decision curve analysis",
+        "performance measures sensitivity specificity net benefit",
+        "comparison of models performance criteria"
+      ],
+      "common_misinterpretations": [
+        "This item concerns the Methods specification of measures. Results reporting of estimates belongs to item 23a.",
+        "Accuracy, precision and recall alone do not cover discrimination and calibration as the guidance expects. Record what is named and mark calibration as missing if absent.",
+        "Calibration is often presented only as a figure in Results. Count it as reported only if the text or caption identifies it.",
+        "Whether calibration is expected as a minimum comes from the expanded guidance, not from the item wording. Show this in the rationale."
+      ],
+      "item_rules": [
+        "Treat discrimination and calibration as required elements because the expanded guidance describes them as generally expected as a minimum (see unresolved question 1)."
+      ],
+      "judgement_categories": [
+        "reported",
+        "partially_reported",
+        "author_stated_unavailable",
+        "not_found_in_main_text",
+        "unclear"
+      ],
+      "illustrative_examples": {
+        "sufficient": "Performance was assessed by the c-statistic (discrimination) and by calibration slope, calibration-in-the-large and smoothed calibration plots. Clinical utility was assessed by decision curve analysis.",
+        "insufficient": "Performance was assessed using accuracy and F1 score.",
+        "provenance": "synthetic, written by ModelAudit"
+      }
+    },
+    {
+      "id": "T-16",
+      "framework": "TRIPOD+AI",
+      "framework_version": "BMJ 2024;385:e078378; E&E Light 7-Feb-2024",
+      "section": "Methods / Development versus evaluation",
+      "source_reference": "Collins et al BMJ 2024;385:e078378, Table 2 (section labelled Training versus evaluation there)",
+      "source_item_reference": "TRIPOD+AI item 16; Expanded Checklist p9",
+      "official_item_text": "Identify any differences between the development and evaluation data in healthcare setting, eligibility criteria, outcome, and predictors",
+      "applies_to": [
+        "development",
+        "evaluation"
+      ],
+      "assessment_prompt": "Determine whether the paper identifies differences, or states there are none, between the development data and the evaluation data in healthcare setting, eligibility criteria, outcome definition and predictor definitions.",
+      "reporting_expectations": [
+        "[E&E] Models developed in one setting, centre or country are not necessarily useful in another. Eligibility criteria, outcome and predictor definitions may differ between data sources.",
+        "[E&E] Describing differences between development and evaluation data helps readers interpret performance and generalisability.",
+        "[INTERP] An explicit statement that there are no differences in a given domain counts as addressing it."
+      ],
+      "elements": [
+        {
+          "key": "setting_differences",
+          "description": "Differences in healthcare setting or an explicit statement of none",
+          "required": true
+        },
+        {
+          "key": "eligibility_differences",
+          "description": "Differences in eligibility criteria or an explicit statement of none",
+          "required": true
+        },
+        {
+          "key": "outcome_differences",
+          "description": "Differences in outcome definition or assessment or an explicit statement of none",
+          "required": true
+        },
+        {
+          "key": "predictor_differences",
+          "description": "Differences in predictor definitions or measurement or an explicit statement of none",
+          "required": true
+        }
+      ],
+      "evidence_requirements": [
+        "A passage that compares the development and evaluation datasets on each of the four domains, or that states they were the same."
+      ],
+      "retrieval_queries": [
+        "differences between the development and external validation cohorts",
+        "compared with the development cohort the validation cohort",
+        "outcome and predictor definitions differed between datasets",
+        "external evaluation setting eligibility criteria differences"
+      ],
+      "common_misinterpretations": [
+        "A table showing baseline characteristics of both cohorts (item 20c) is related but does not by itself identify differences in setting, eligibility, outcome definition or predictor definitions.",
+        "Differences in case-mix or prevalence are not the same as differences in definitions. Record what is stated.",
+        "Do not infer differences yourself by comparing two descriptions. Only mark reported if the paper itself states them or states there are none.",
+        "A single-dataset study has no evaluation dataset to compare against."
+      ],
+      "item_rules": [
+        "If the study has no separate evaluation dataset (for example development with only internal validation), mark the item not_applicable and say so in the rationale. This is a ModelAudit operational rule (see unresolved question 3)."
+      ],
+      "judgement_categories": [
+        "reported",
+        "partially_reported",
+        "author_stated_unavailable",
+        "not_found_in_main_text",
+        "unclear",
+        "not_applicable"
+      ],
+      "illustrative_examples": {
+        "sufficient": "Compared with the development cohort, the evaluation cohort was recruited in primary care rather than hospitals, excluded pregnant women, and defined hypertension from a single clinic reading. Predictors were measured identically.",
+        "insufficient": "The external cohort differed in some respects.",
+        "provenance": "synthetic, written by ModelAudit"
+      },
+      "applies_when": {
+        "field": "has_separate_evaluation_dataset",
+        "operator": "equals",
+        "value": true
+      }
+    },
+    {
+      "id": "T-18e",
+      "framework": "TRIPOD+AI",
+      "framework_version": "BMJ 2024;385:e078378; E&E Light 7-Feb-2024",
+      "section": "Open science / Data sharing",
+      "source_reference": "Collins et al BMJ 2024;385:e078378, Table 2",
+      "source_item_reference": "TRIPOD+AI item 18e; Expanded Checklist p10",
+      "official_item_text": "Provide details of the availability of the study data",
+      "applies_to": [
+        "development",
+        "evaluation"
+      ],
+      "assessment_prompt": "Determine whether the paper states whether the study data are available and, if so, where and how they can be obtained and under what conditions, or, if not, why not.",
+      "reporting_expectations": [
+        "[E&E] Give details of availability of the study data, including where they can be found (repository, URL or DOI), how they can be retrieved, and any conditions or restrictions on use.",
+        "[E&E] A data dictionary should accompany any shared data.",
+        "[E&E] If data cannot be shared, give reasons.",
+        "[E&E] Avoid platitudes such as data available upon reasonable request without stating what counts as a reasonable request."
+      ],
+      "elements": [
+        {
+          "key": "availability_statement",
+          "description": "Explicit statement of whether data are available",
+          "required": true
+        },
+        {
+          "key": "location_or_access_route",
+          "description": "Repository, URL, DOI, or named access procedure",
+          "required": true,
+          "applies_when": {
+            "field": "data_stated_available",
+            "operator": "equals",
+            "value": true
+          }
+        },
+        {
+          "key": "conditions_or_reasons",
+          "description": "Conditions of access, or reasons data cannot be shared",
+          "required": true
+        },
+        {
+          "key": "data_dictionary",
+          "description": "Data dictionary provided or mentioned",
+          "required": false
+        }
+      ],
+      "evidence_requirements": [
+        "A data availability statement in the main text, usually near the end of the paper."
+      ],
+      "retrieval_queries": [
+        "data availability statement",
+        "data are available from repository or upon request",
+        "data sharing restrictions and access conditions",
+        "dataset publicly available DOI URL"
+      ],
+      "common_misinterpretations": [
+        "Data available upon reasonable request, without conditions, is the platitude the guidance warns against. Mark partially_reported and explain.",
+        "Availability of the original public dataset (for example a public survey) can count if the paper says how to access it.",
+        "Code availability is item 18f, not this item.",
+        "Data availability statements are often outside the main body. If none is found, use not_found_in_main_text."
+      ],
+      "item_rules": [
+        "Platitude-only statements are partially_reported, never reported."
+      ],
+      "judgement_categories": [
+        "reported",
+        "partially_reported",
+        "author_stated_unavailable",
+        "not_found_in_main_text",
+        "unclear"
+      ],
+      "illustrative_examples": {
+        "sufficient": "The data are held in a public repository at the stated DOI. Access requires registration and acceptance of a data use agreement. A data dictionary is included.",
+        "insufficient": "Data available upon reasonable request.",
+        "provenance": "synthetic, written by ModelAudit"
+      }
+    },
+    {
+      "id": "T-18f",
+      "framework": "TRIPOD+AI",
+      "framework_version": "BMJ 2024;385:e078378; E&E Light 7-Feb-2024",
+      "section": "Open science / Code sharing",
+      "source_reference": "Collins et al BMJ 2024;385:e078378, Table 2",
+      "source_item_reference": "TRIPOD+AI item 18f; Expanded Checklist p10",
+      "official_item_text": "Provide details of the availability of the analytical code",
+      "applies_to": [
+        "development",
+        "evaluation"
+      ],
+      "assessment_prompt": "Determine whether the paper states whether the analytical code is available and, if so, where and under what conditions, or, if not, why not.",
+      "reporting_expectations": [
+        "[E&E] Give all details on availability of the analytical code, including documentation on how to run it, where it can be found, how to retrieve it, and any conditions or licences, with version.",
+        "[E&E] Analytical code means all code needed in principle to replicate the reported results, including data cleaning.",
+        "[E&E] Report the software and packages needed to reproduce the findings, with version numbers; more computing environment detail may be needed in some cases."
+      ],
+      "elements": [
+        {
+          "key": "availability_statement",
+          "description": "Explicit statement of whether analytical code is available",
+          "required": true
+        },
+        {
+          "key": "location_or_access_route",
+          "description": "Repository, URL, DOI or access procedure",
+          "required": true,
+          "applies_when": {
+            "field": "code_stated_available",
+            "operator": "equals",
+            "value": true
+          }
+        },
+        {
+          "key": "conditions_licence_or_reasons",
+          "description": "Licence or conditions, or reasons code is not shared",
+          "required": true
+        },
+        {
+          "key": "software_and_versions",
+          "description": "Software and package versions needed to reproduce the analysis",
+          "required": false
+        }
+      ],
+      "evidence_requirements": [
+        "A code availability statement or a repository link with an indication that it holds the analysis code."
+      ],
+      "retrieval_queries": [
+        "code availability statement",
+        "analysis code is available at GitHub repository",
+        "software and packages used with version numbers",
+        "code is available from the authors on request"
+      ],
+      "common_misinterpretations": [
+        "A link to a deployed web tool or model object is not necessarily the analytical code. Check what the link contains, and see item 22 for model availability.",
+        "A statement that code is available from the authors without conditions is partial.",
+        "Listing software without versions does not by itself satisfy the availability element.",
+        "Data availability is item 18e, not this item."
+      ],
+      "item_rules": [
+        "Statements giving only that code is available on request, with no location or conditions, are partially_reported."
+      ],
+      "judgement_categories": [
+        "reported",
+        "partially_reported",
+        "author_stated_unavailable",
+        "not_found_in_main_text",
+        "unclear"
+      ],
+      "illustrative_examples": {
+        "sufficient": "All analysis code, with Python 3.10 and package versions, is available at the stated repository release under an MIT licence.",
+        "insufficient": "Code is available from the authors.",
+        "provenance": "synthetic, written by ModelAudit"
+      }
+    },
+    {
+      "id": "T-23a",
+      "framework": "TRIPOD+AI",
+      "framework_version": "BMJ 2024;385:e078378; E&E Light 7-Feb-2024",
+      "section": "Results / Model performance",
+      "source_reference": "Collins et al BMJ 2024;385:e078378, Table 2",
+      "source_item_reference": "TRIPOD+AI item 23a; Expanded Checklist p12",
+      "official_item_text": "Report model performance estimates with confidence intervals, including for any key subgroups (e.g., sociodemographic). Consider plots to aid presentation",
+      "applies_to": [
+        "development",
+        "evaluation"
+      ],
+      "assessment_prompt": "Determine whether the Results report performance estimates with confidence intervals for the measures named in the Methods, state which data each estimate comes from, and report performance for key subgroups where relevant.",
+      "reporting_expectations": [
+        "[E&E] Present estimates of all performance measures described in item 12e, with confidence intervals.",
+        "[E&E] Report estimates for the overall population and for any key groups of interest, for example sex or ethnicity, with confidence intervals.",
+        "[E&E] Consider plots such as calibration plots with smooth curves and decision curves.",
+        "[E&E] Report estimates for all evaluations undertaken (development data, evaluation data, internal validation) and at each time point for prognostic models.",
+        "[E&E] Clearly indicate which data were used for each estimate."
+      ],
+      "elements": [
+        {
+          "key": "estimates_reported",
+          "description": "Performance estimates reported for the measures named in the Methods",
+          "required": true
+        },
+        {
+          "key": "confidence_intervals",
+          "description": "Confidence or uncertainty intervals for the estimates",
+          "required": true
+        },
+        {
+          "key": "data_used_for_each_estimate",
+          "description": "Which dataset or evaluation each estimate refers to",
+          "required": true
+        },
+        {
+          "key": "subgroup_performance",
+          "description": "Performance in key subgroups such as sex or age group",
+          "required": false,
+          "applies_when": {
+            "field": "subgroup_performance_evaluated_or_reported",
+            "operator": "equals",
+            "value": true
+          }
+        },
+        {
+          "key": "time_points",
+          "description": "Estimates at each prediction time point",
+          "required": true,
+          "applies_when": {
+            "field": "study_type",
+            "operator": "equals",
+            "value": "prognostic"
+          }
+        }
+      ],
+      "evidence_requirements": [
+        "A Results passage or table with numerical estimates and intervals.",
+        "A statement of which data produced each estimate."
+      ],
+      "retrieval_queries": [
+        "model performance c-statistic AUC with 95% confidence interval",
+        "calibration slope and intercept results",
+        "performance in subgroups by sex age or region",
+        "table of discrimination and calibration in development and validation cohorts"
+      ],
+      "common_misinterpretations": [
+        "Estimates without intervals are partial. Do not infer intervals from standard errors that are not given.",
+        "Results in a figure whose numbers are not in the excerpts cannot be verified. Use unclear and flag for the reviewer.",
+        "Apparent performance in the development data and internal or external evaluation estimates are different. Record which are shown.",
+        "Subgroup results are in the item wording but are non-required here by decision (see unresolved question 1)."
+      ],
+      "item_rules": [
+        "If estimates are reported only for development data when an evaluation was done, mark partially_reported."
+      ],
+      "judgement_categories": [
+        "reported",
+        "partially_reported",
+        "author_stated_unavailable",
+        "not_found_in_main_text",
+        "unclear"
+      ],
+      "illustrative_examples": {
+        "sufficient": "In the external cohort the c-statistic was 0.78 (95% CI 0.74 to 0.82) overall, 0.80 (0.75 to 0.85) in women and 0.75 (0.69 to 0.81) in men.",
+        "insufficient": "The AUC was 0.78.",
+        "provenance": "synthetic, written by ModelAudit"
+      }
+    }
+  ],
+  "implementation_decisions": {
+    "date_precision": "Accept year-level dates when that is the precision reported by the paper; preserve the reported precision and do not infer finer dates.",
+    "conditional_requirements": "Element applicability is represented with structured applies_when conditions evaluated against a study_context object.",
+    "no_separate_evaluation_dataset": "When has_separate_evaluation_dataset is false, comparison-specific elements in T-5a, T-5b and T-10 are not applicable; T-16 is not applicable.",
+    "T-8a": "rationale_for_outcome and consistency_across_groups are required; standard_definition_cited and predictors_not_in_outcome remain optional.",
+    "T-23a": "confidence_intervals are optional. subgroup_performance is required when subgroup performance was evaluated or reported.",
+    "category_derivation": "The final item category is computed deterministically from applicable element findings; an LLM-proposed category is only a cross-check.",
+    "synthetic_examples": "Illustrative synthetic examples are excluded from the initial judge prompt and reserved for tests and reviewer guidance."
+  }
+}
