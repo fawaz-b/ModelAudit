@@ -1,0 +1,677 @@
+{
+  "schema_version": "1.0.0",
+  "framework": "PROBAST+AI",
+  "framework_version": "BMJ 2025;388:e082505 (Moons et al), evaluation branch subset",
+  "branch": "evaluation",
+  "branch_meaning": {
+    "term": "Model evaluation: assesses risk of bias in the predictive performance estimates.",
+    "not_to_be_confused_with": "Model development, which assesses quality, not bias.",
+    "source": "Moons et al, BMJ 2025;388:e082505, pp. 8-9"
+  },
+  "licence": {
+    "name": "CC BY-NC 4.0",
+    "url": "https://creativecommons.org/licenses/by-nc/4.0/",
+    "non_commercial_only": true,
+    "note": "Attribute, state changes, and do not use commercially without checking the licence."
+  },
+  "attribution": "Question numbering, question wording, domain names and response options are from Moons KGM, Damen JAA, Kaul T, et al. PROBAST+AI: an updated quality, risk of bias, and applicability assessment tool for prediction models using regression or artificial intelligence methods. BMJ 2025;388:e082505, CC BY-NC 4.0. Lineage information is from the PROBAST+AI Supplementals (Supplementary table 5). Content under the modelaudit key and all ModelAudit decisions are original to this project and are not endorsed by the PROBAST+AI authors.",
+  "source_status": {
+    "verified_from": [
+      "Moons et al, BMJ 2025;388:e082505: Table 2 (p. 8), Box 1 (pp. 3-4), text on steps, judgements and applicability (pp. 9-11), Discussion (p. 12)",
+      "PROBAST+AI Supplementals (probast.org), Supplementary table 5 (pp. 4-6)"
+    ],
+    "not_obtained": [
+      "Supplementary table 3 (the PROBAST+AI tool, including Step 4 guidance)",
+      "Supplementary table 4 (Explanation and Elaboration Light, per-question guidance)"
+    ],
+    "where_to_get_them": [
+      "https://www.probast.org/probast_ai/downloads/ (PROBAST+AI tool and PROBAST+AI Explanation & Elaboration)"
+    ],
+    "consequence": "Per-question official guidance and the official domain-judgement and overall-judgement guidance are not encoded. Fields that would hold them are marked not extracted."
+  },
+  "provenance_key": {
+    "official": "Taken from the PROBAST+AI paper or supplementals, with page or table reference.",
+    "modelaudit": "ModelAudit operational decision or content. Not official."
+  },
+  "response_scale": {
+    "standard": {
+      "options": [
+        {
+          "value": "yes",
+          "label": "Yes",
+          "indicates": "low risk of bias for this question"
+        },
+        {
+          "value": "probably_yes",
+          "label": "Probably yes",
+          "indicates": "low risk of bias for this question"
+        },
+        {
+          "value": "probably_no",
+          "label": "Probably no",
+          "indicates": "flags the potential for bias"
+        },
+        {
+          "value": "no",
+          "label": "No",
+          "indicates": "flags the potential for bias"
+        },
+        {
+          "value": "no_information",
+          "label": "No information",
+          "indicates": "reported information is insufficient to permit a judgement"
+        },
+        {
+          "value": "not_applicable",
+          "label": "Not applicable",
+          "indicates": "the question does not apply to this type of model or situation"
+        }
+      ],
+      "rules": [
+        {
+          "text": "All signalling questions are phrased so that yes or probably yes indicates low risk of bias.",
+          "source": "Moons et al, BMJ 2025;388:e082505, p. 10"
+        },
+        {
+          "text": "Any no or probably no flags the potential for bias; assessors use judgement to rate the whole domain.",
+          "source": "Moons et al, BMJ 2025;388:e082505, p. 10"
+        },
+        {
+          "text": "No information is used only when reported information is insufficient to permit a judgement.",
+          "source": "Moons et al, BMJ 2025;388:e082505, p. 10"
+        },
+        {
+          "text": "Not applicable may be available for items not applicable to certain model types or situations.",
+          "source": "Moons et al, BMJ 2025;388:e082505, p. 10"
+        }
+      ],
+      "source": "Moons et al, BMJ 2025;388:e082505, Table 2 footnote (p. 8) and p. 10"
+    }
+  },
+  "domain_judgement": {
+    "official_scale": [
+      "low",
+      "high",
+      "unclear"
+    ],
+    "official_statements": [
+      {
+        "text": "For model evaluation, each domain is judged as low, high or unclear risk of bias, based on the signalling question answers and assessor judgement.",
+        "source": "Moons et al, BMJ 2025;388:e082505, p. 10"
+      },
+      {
+        "text": "A no answer does not automatically result in a high risk of bias rating for the entire domain.",
+        "source": "Moons et al, BMJ 2025;388:e082505, p. 10"
+      },
+      {
+        "text": "Step 4 combines the four domain ratings into an overall judgement (low, high or unclear). The detailed guidance is in supplementary table 3, which has not been extracted.",
+        "source": "Moons et al, BMJ 2025;388:e082505, p. 11"
+      }
+    ],
+    "modelaudit_decisions": [
+      {
+        "id": "MD-1",
+        "text": "The system never proposes or computes a domain risk-of-bias judgement. It only summarises the answers and flags questions answered no or probably no for attention.",
+        "status": "proposed"
+      },
+      {
+        "id": "MD-2",
+        "text": "Because only a subset of each domain's questions is assessed (see domains.coverage), any domain judgement a reviewer records must be labelled as based on a subset and is not an official PROBAST+AI domain rating.",
+        "status": "proposed"
+      },
+      {
+        "id": "MD-3",
+        "text": "No overall (Step 4) risk-of-bias judgement and no numeric score are produced in the MVP.",
+        "status": "proposed"
+      }
+    ]
+  },
+  "applicability_assessment": {
+    "official": {
+      "rated_domains": [
+        "D1",
+        "D2",
+        "D3"
+      ],
+      "scale": [
+        "low",
+        "high",
+        "unclear"
+      ],
+      "definition": "Concern that the participants and setting, the predictors, or the outcome do not match the review question or the assessor's intended use of the model.",
+      "requires": "A specified review question or intended use, defined with PICOTS in Step 1.",
+      "separate_from_risk_of_bias": true,
+      "source": "Moons et al, BMJ 2025;388:e082505, pp. 10-11 and Table 2, p. 8"
+    },
+    "modelaudit_decisions": [
+      {
+        "id": "MD-4",
+        "text": "Applicability stays not assessed unless the reviewer supplies the intended use or PICOTS. The transportability layer is deferred, so no automatic comparison is made.",
+        "status": "proposed"
+      },
+      {
+        "id": "MD-5",
+        "text": "Applicability judgements are never merged with risk-of-bias judgements, and are stored in a separate structure.",
+        "status": "proposed"
+      }
+    ]
+  },
+  "assessment_context": {
+    "step1_picots": {
+      "fields": [
+        "population",
+        "index_model",
+        "comparator_model",
+        "outcome",
+        "timing",
+        "setting",
+        "intended_use"
+      ],
+      "source": "Moons et al, BMJ 2025;388:e082505, p. 10 (Step 1)"
+    },
+    "step2_classification": {
+      "study_type": [
+        "development",
+        "evaluation",
+        "both"
+      ],
+      "evaluation_component": [
+        "apparent",
+        "internal",
+        "external"
+      ],
+      "source": "Moons et al, BMJ 2025;388:e082505, p. 10 (Step 2) and Box 1, pp. 3-4",
+      "official_notes": [
+        "A separate assessment is done for each model and, as relevant, for each of the apparent, internal and external evaluation components (p. 9, p. 11).",
+        "For studies that only develop models, both parts of PROBAST+AI must usually still be completed (p. 11). The MVP assesses the evaluation part only."
+      ]
+    }
+  },
+  "questions": [
+    {
+      "id": "PE-1.3",
+      "framework": "PROBAST+AI",
+      "branch": "evaluation",
+      "source_question_number": "1.3",
+      "domain_id": "D1",
+      "official_wording": "Did the inclusions and exclusions of study participants result in a representative dataset?",
+      "wording_source": {
+        "document": "Moons et al, BMJ 2025;388:e082505",
+        "location": "Table 2, model evaluation, domain participants and data sources, p. 8"
+      },
+      "response_scale": "standard",
+      "not_applicable_allowed": false,
+      "conditional_rule": null,
+      "lineage": {
+        "probast_2019": "1.2 Were all inclusions and exclusions of participants appropriate?",
+        "change": "Wording changed",
+        "source": "PROBAST+AI Supplementals (probast.org), Supplementary table 5, p. 4"
+      },
+      "official_notes": [
+        {
+          "text": "The paper says data used to evaluate a model that are not representative of the assessor's target population can make performance estimates misleading, particularly in subgroups.",
+          "source": "Moons et al, BMJ 2025;388:e082505, Discussion, p. 12"
+        }
+      ],
+      "official_guidance_status": "Supplementary table 4 (Explanation and Elaboration Light) not extracted. Add its guidance for this question before relying on modelaudit.evidence_focus.",
+      "modelaudit": {
+        "origin": "ModelAudit operational content. Not official PROBAST+AI text.",
+        "evidence_focus": [
+          "Eligibility criteria and exclusions applied to the evaluation dataset",
+          "Statements about who is missing from or over-represented in the evaluation data",
+          "The population the model is intended for, if stated"
+        ],
+        "retrieval_queries": [
+          "inclusion and exclusion criteria evaluation cohort",
+          "participants excluded from the analysis",
+          "representativeness of the evaluation dataset"
+        ],
+        "common_misinterpretations": [
+          "Representative is relative to an intended population. If none is stated, answer no information, not no.",
+          "Exclusions for missing data belong here only if they changed who is in the evaluation dataset."
+        ],
+        "depends_on": [
+          "intended_use_or_target_population"
+        ]
+      }
+    },
+    {
+      "id": "PE-2.4",
+      "framework": "PROBAST+AI",
+      "branch": "evaluation",
+      "source_question_number": "2.4",
+      "domain_id": "D2",
+      "official_wording": "Were the predictors included in the model available at the time the model was intended to be used?",
+      "wording_source": {
+        "document": "Moons et al, BMJ 2025;388:e082505",
+        "location": "Table 2, model evaluation, domain predictors, p. 8"
+      },
+      "response_scale": "standard",
+      "not_applicable_allowed": false,
+      "conditional_rule": null,
+      "lineage": {
+        "probast_2019": "2.3 Are all predictors available at the time the model is intended to be used?",
+        "change": "Wording changed",
+        "source": "PROBAST+AI Supplementals (probast.org), Supplementary table 5, p. 4"
+      },
+      "official_notes": [],
+      "official_guidance_status": "Supplementary table 4 (Explanation and Elaboration Light) not extracted. Add its guidance for this question before relying on modelaudit.evidence_focus.",
+      "modelaudit": {
+        "origin": "ModelAudit operational content. Not official PROBAST+AI text.",
+        "evidence_focus": [
+          "When each predictor was measured",
+          "When the model is intended to be used in the care pathway",
+          "Any predictor measured after the point of intended use"
+        ],
+        "retrieval_queries": [
+          "predictors measured at admission or at follow-up",
+          "timing of predictor measurement",
+          "intended point of use of the model"
+        ],
+        "common_misinterpretations": [
+          "Needs the intended time of use. If the paper never states it, answer no information.",
+          "A predictor existing in the dataset does not show it would be available at the point of use."
+        ],
+        "depends_on": [
+          "intended_use_or_target_population"
+        ]
+      }
+    },
+    {
+      "id": "PE-3.1",
+      "framework": "PROBAST+AI",
+      "branch": "evaluation",
+      "source_question_number": "3.1",
+      "domain_id": "D3",
+      "official_wording": "Were outcomes defined and assessed appropriately?",
+      "wording_source": {
+        "document": "Moons et al, BMJ 2025;388:e082505",
+        "location": "Table 2, model evaluation, domain outcomes, p. 8"
+      },
+      "response_scale": "standard",
+      "not_applicable_allowed": false,
+      "conditional_rule": null,
+      "lineage": {
+        "probast_2019": "3.1 Was the outcome determined appropriately? / 3.2 Was a pre-specified or standard outcome definition used? / 3.3 Were predictors excluded from the outcome definition?",
+        "change": "Three items combined in one",
+        "source": "PROBAST+AI Supplementals (probast.org), Supplementary table 5, pp. 4-5"
+      },
+      "official_notes": [],
+      "official_guidance_status": "Supplementary table 4 (Explanation and Elaboration Light) not extracted. Add its guidance for this question before relying on modelaudit.evidence_focus.",
+      "modelaudit": {
+        "origin": "ModelAudit operational content. Not official PROBAST+AI text.",
+        "evidence_focus": [
+          "Outcome definition and reference standard",
+          "How and when the outcome was determined and by whom",
+          "Whether a standard or pre-specified definition was used",
+          "Any overlap between predictors and the outcome definition"
+        ],
+        "retrieval_queries": [
+          "outcome definition and reference standard",
+          "how the outcome was ascertained",
+          "predictors used to define the outcome"
+        ],
+        "common_misinterpretations": [
+          "Naming the outcome is not showing it was defined and assessed appropriately.",
+          "Appropriateness is a judgement. If the paper gives too little detail, answer no information."
+        ],
+        "depends_on": []
+      }
+    },
+    {
+      "id": "PE-4.1",
+      "framework": "PROBAST+AI",
+      "branch": "evaluation",
+      "source_question_number": "4.1",
+      "domain_id": "D4",
+      "official_wording": "Was model evaluation based on only apparent performance avoided?",
+      "wording_source": {
+        "document": "Moons et al, BMJ 2025;388:e082505",
+        "location": "Table 2, model evaluation, domain analyses, p. 8"
+      },
+      "response_scale": "standard",
+      "not_applicable_allowed": false,
+      "conditional_rule": null,
+      "lineage": {
+        "probast_2019": "None",
+        "change": "New item",
+        "source": "PROBAST+AI Supplementals (probast.org), Supplementary table 5, p. 5"
+      },
+      "official_notes": [
+        {
+          "text": "Apparent performance means performance estimated on the same data used for development. Evaluation can be apparent, internal validation or external validation.",
+          "source": "Moons et al, BMJ 2025;388:e082505, Box 1, p. 3 and p. 9"
+        },
+        {
+          "text": "A separate assessment is done for each model and, as relevant, for each of the apparent, internal and external evaluation components.",
+          "source": "Moons et al, BMJ 2025;388:e082505, p. 9 and p. 11"
+        }
+      ],
+      "official_guidance_status": "Supplementary table 4 (Explanation and Elaboration Light) not extracted. Add its guidance for this question before relying on modelaudit.evidence_focus.",
+      "modelaudit": {
+        "origin": "ModelAudit operational content. Not official PROBAST+AI text.",
+        "evidence_focus": [
+          "How performance was estimated: same data, splitting, resampling or cross-validation, or separate participants",
+          "Whether any evaluation used data not used for development"
+        ],
+        "retrieval_queries": [
+          "performance on a held-out test set",
+          "cross-validation or bootstrap internal validation",
+          "external validation cohort"
+        ],
+        "common_misinterpretations": [
+          "Yes means only-apparent evaluation was avoided. A held-out split or external data both count as not apparent-only; the type of evaluation is recorded separately in the assessment context."
+        ],
+        "depends_on": [
+          "evaluation_component"
+        ]
+      }
+    },
+    {
+      "id": "PE-4.2",
+      "framework": "PROBAST+AI",
+      "branch": "evaluation",
+      "source_question_number": "4.2",
+      "domain_id": "D4",
+      "official_wording": "Was there evidence that the sample size was reasonable?",
+      "wording_source": {
+        "document": "Moons et al, BMJ 2025;388:e082505",
+        "location": "Table 2, model evaluation, domain analyses, p. 8"
+      },
+      "response_scale": "standard",
+      "not_applicable_allowed": false,
+      "conditional_rule": null,
+      "lineage": {
+        "probast_2019": "4.1 Were there a reasonable number of participants with the outcome?",
+        "change": "Wording changed",
+        "source": "PROBAST+AI Supplementals (probast.org), Supplementary table 5, p. 5"
+      },
+      "official_notes": [
+        {
+          "text": "Bias must not be confused with imprecision. Imprecision means wide confidence intervals from a small evaluation sample.",
+          "source": "Moons et al, BMJ 2025;388:e082505, p. 9 and Box 1, p. 3"
+        }
+      ],
+      "official_guidance_status": "Supplementary table 4 (Explanation and Elaboration Light) not extracted. Add its guidance for this question before relying on modelaudit.evidence_focus.",
+      "modelaudit": {
+        "origin": "ModelAudit operational content. Not official PROBAST+AI text.",
+        "evidence_focus": [
+          "Number of participants and outcome events in the evaluation data",
+          "Any sample size calculation or justification for evaluation",
+          "Confidence interval widths as a sign of imprecision"
+        ],
+        "retrieval_queries": [
+          "number of participants and outcome events in the test set",
+          "sample size calculation for evaluation",
+          "precision of performance estimates"
+        ],
+        "common_misinterpretations": [
+          "Do not apply a numeric rule of thumb. Decide only on the evidence the paper gives, and use no information if there is none.",
+          "Development sample size is not evaluation sample size."
+        ],
+        "depends_on": []
+      }
+    },
+    {
+      "id": "PE-4.3",
+      "framework": "PROBAST+AI",
+      "branch": "evaluation",
+      "source_question_number": "4.3",
+      "domain_id": "D4",
+      "official_wording": "Were participants with missing or censored data handled appropriately in the analysis?",
+      "wording_source": {
+        "document": "Moons et al, BMJ 2025;388:e082505",
+        "location": "Table 2, model evaluation, domain analyses, p. 8"
+      },
+      "response_scale": "standard",
+      "not_applicable_allowed": false,
+      "conditional_rule": null,
+      "lineage": {
+        "probast_2019": "4.4 Were participants with missing data handled appropriately?",
+        "change": "Wording changed",
+        "source": "PROBAST+AI Supplementals (probast.org), Supplementary table 5, p. 5"
+      },
+      "official_notes": [],
+      "official_guidance_status": "Supplementary table 4 (Explanation and Elaboration Light) not extracted. Add its guidance for this question before relying on modelaudit.evidence_focus.",
+      "modelaudit": {
+        "origin": "ModelAudit operational content. Not official PROBAST+AI text.",
+        "evidence_focus": [
+          "Amount of missing or censored data",
+          "How missing or censored data were handled in the evaluation analysis",
+          "Exclusions made because of missing data"
+        ],
+        "retrieval_queries": [
+          "missing data handling imputation complete case",
+          "censoring and loss to follow-up",
+          "participants excluded because of missing values"
+        ],
+        "common_misinterpretations": [
+          "Reporting that data were missing is not the same as saying how they were handled.",
+          "If the paper states there were no missing data, record that as the evidence."
+        ],
+        "depends_on": []
+      }
+    },
+    {
+      "id": "PE-4.5",
+      "framework": "PROBAST+AI",
+      "branch": "evaluation",
+      "source_question_number": "4.5",
+      "domain_id": "D4",
+      "official_wording": "If data splitting was done to create training and test datasets, was there evidence that data leakage was avoided?",
+      "wording_source": {
+        "document": "Moons et al, BMJ 2025;388:e082505",
+        "location": "Table 2, model evaluation, domain analyses, p. 8"
+      },
+      "response_scale": "standard",
+      "not_applicable_allowed": true,
+      "conditional_rule": {
+        "type": "conditional_on_study_design",
+        "condition": "Data splitting was done to create training and test datasets.",
+        "when_condition_false": "not_applicable",
+        "source": "Moons et al, BMJ 2025;388:e082505, Table 2, p. 8 (the condition is part of the question wording) and p. 10 (not applicable option)",
+        "machine_checkable": false
+      },
+      "lineage": {
+        "probast_2019": "None",
+        "change": "New item",
+        "source": "PROBAST+AI Supplementals (probast.org), Supplementary table 5, p. 5"
+      },
+      "official_notes": [
+        {
+          "text": "Data leakage means data from the development phase inadvertently included during evaluation, typically giving over-optimistic performance.",
+          "source": "Moons et al, BMJ 2025;388:e082505, Box 1, p. 3"
+        },
+        {
+          "text": "The not applicable category may be available for items that do not apply to certain types of model or situation.",
+          "source": "Moons et al, BMJ 2025;388:e082505, p. 10"
+        }
+      ],
+      "official_guidance_status": "Supplementary table 4 (Explanation and Elaboration Light) not extracted. Add its guidance for this question before relying on modelaudit.evidence_focus.",
+      "modelaudit": {
+        "origin": "ModelAudit operational content. Not official PROBAST+AI text.",
+        "evidence_focus": [
+          "Whether the data were split into training and test sets",
+          "How the split was done, including at participant level",
+          "Steps showing development choices did not use the test data"
+        ],
+        "retrieval_queries": [
+          "data were split into training and test sets",
+          "participants in both training and test data",
+          "preprocessing or feature selection performed before splitting"
+        ],
+        "common_misinterpretations": [
+          "If no splitting was done, the official answer option is not applicable, not no.",
+          "Absence of evidence of leakage is no information, not no."
+        ],
+        "depends_on": [
+          "study_profile.data_splitting"
+        ]
+      }
+    },
+    {
+      "id": "PE-4.7",
+      "framework": "PROBAST+AI",
+      "branch": "evaluation",
+      "source_question_number": "4.7",
+      "domain_id": "D4",
+      "official_wording": "Was the predictive performance of the model evaluated appropriately—for example, calibration, discrimination, and net benefit?",
+      "wording_source": {
+        "document": "Moons et al, BMJ 2025;388:e082505",
+        "location": "Table 2, model evaluation, domain analyses, p. 8"
+      },
+      "response_scale": "standard",
+      "not_applicable_allowed": false,
+      "conditional_rule": null,
+      "lineage": {
+        "probast_2019": "4.7 Were relevant model performance measures evaluated appropriately?",
+        "change": "Wording changed",
+        "source": "PROBAST+AI Supplementals (probast.org), Supplementary table 5, p. 6"
+      },
+      "official_notes": [
+        {
+          "text": "Model evaluation estimates performance for example by Brier score, discrimination, calibration and clinical usefulness such as decision curve analysis.",
+          "source": "Moons et al, BMJ 2025;388:e082505, Box 1, p. 4"
+        }
+      ],
+      "official_guidance_status": "Supplementary table 4 (Explanation and Elaboration Light) not extracted. Add its guidance for this question before relying on modelaudit.evidence_focus.",
+      "modelaudit": {
+        "origin": "ModelAudit operational content. Not official PROBAST+AI text.",
+        "evidence_focus": [
+          "Which performance measures were reported",
+          "Whether calibration and discrimination were both assessed",
+          "Whether clinical usefulness (net benefit) was assessed"
+        ],
+        "retrieval_queries": [
+          "calibration plot calibration slope",
+          "c-statistic discrimination",
+          "decision curve analysis net benefit"
+        ],
+        "common_misinterpretations": [
+          "The examples in the question are examples, not a fixed list. Do not answer no only because net benefit is absent; record exactly which measures were found.",
+          "This is distinct from TRIPOD+AI item 12e, which concerns whether measures are specified in the Methods."
+        ],
+        "depends_on": []
+      }
+    }
+  ],
+  "domains": [
+    {
+      "id": "D1",
+      "name_table2": "Participants and data sources",
+      "name_in_text": "participants and data sources",
+      "official_evaluation_question_count": 3,
+      "official_question_numbers": [
+        "1.1",
+        "1.2",
+        "1.3"
+      ],
+      "included_question_ids": [
+        "PE-1.3"
+      ],
+      "rob_statement": "Risk of bias introduced by the selection of participants and data sources",
+      "applicability": {
+        "rated": true,
+        "statement": "Concern that the data of the included participants do not match the review question or the assessor's intended use of the prediction model"
+      },
+      "source": "Moons et al, BMJ 2025;388:e082505, Table 2, p. 8",
+      "coverage": {
+        "included": 1,
+        "official": 3,
+        "complete": false
+      }
+    },
+    {
+      "id": "D2",
+      "name_table2": "Predictors",
+      "name_in_text": "predictors",
+      "official_evaluation_question_count": 4,
+      "official_question_numbers": [
+        "2.1",
+        "2.2",
+        "2.3",
+        "2.4"
+      ],
+      "included_question_ids": [
+        "PE-2.4"
+      ],
+      "rob_statement": "Risk of bias introduced by the predictors or their assessment",
+      "applicability": {
+        "rated": true,
+        "statement": "Concern that the definition, preprocessing, assessment, or timing of assessment of the predictors in the model do not match the review question or the assessor's intended use"
+      },
+      "source": "Moons et al, BMJ 2025;388:e082505, Table 2, p. 8",
+      "coverage": {
+        "included": 1,
+        "official": 4,
+        "complete": false
+      }
+    },
+    {
+      "id": "D3",
+      "name_table2": "Outcomes",
+      "name_in_text": "outcome",
+      "official_evaluation_question_count": 4,
+      "official_question_numbers": [
+        "3.1",
+        "3.2",
+        "3.3",
+        "3.4"
+      ],
+      "included_question_ids": [
+        "PE-3.1"
+      ],
+      "rob_statement": "Risk of bias introduced by the outcome or its determination",
+      "applicability": {
+        "rated": true,
+        "statement": "Concern that the outcome, its definition, assessment, or timing of assessment do not match the review question or the assessor's intended use"
+      },
+      "source": "Moons et al, BMJ 2025;388:e082505, Table 2, p. 8",
+      "coverage": {
+        "included": 1,
+        "official": 4,
+        "complete": false
+      }
+    },
+    {
+      "id": "D4",
+      "name_table2": "Analyses",
+      "name_in_text": "analysis",
+      "official_evaluation_question_count": 7,
+      "official_question_numbers": [
+        "4.1",
+        "4.2",
+        "4.3",
+        "4.4",
+        "4.5",
+        "4.6",
+        "4.7"
+      ],
+      "included_question_ids": [
+        "PE-4.1",
+        "PE-4.2",
+        "PE-4.3",
+        "PE-4.5",
+        "PE-4.7"
+      ],
+      "rob_statement": "Risk of bias introduced by the analysis",
+      "applicability": {
+        "rated": false,
+        "statement": null
+      },
+      "source": "Moons et al, BMJ 2025;388:e082505, Table 2, p. 8; applicability rated for the first three domains only, p. 10",
+      "coverage": {
+        "included": 5,
+        "official": 7,
+        "complete": false
+      }
+    }
+  ],
+  "modelaudit_global_rules": [
+    "Use only the supplied excerpts. Every answer other than no_information needs at least one verbatim quotation with chunk_id and PDF page.",
+    "no_information and not_assessed are different. not_assessed means the system did not run the question. no_information is an official answer meaning the paper gave too little to judge.",
+    "A quotation that exists in the paper does not by itself show that it supports the answer.",
+    "Never state or imply that a model is clinically valid, safe or ready for use.",
+    "Do not use TRIPOD+AI reporting categories. PROBAST+AI answers use the official response scale only."
+  ]
+}
