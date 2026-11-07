@@ -6,6 +6,7 @@ from functools import lru_cache
 from typing import Annotated
 
 from fastapi import FastAPI, File, HTTPException, UploadFile
+from fastapi.middleware.cors import CORSMiddleware
 from sentence_transformers import SentenceTransformer
 
 from app.audit import run_tripod_audit
@@ -35,6 +36,17 @@ app = FastAPI(
     description=(
         "An evidence-linked appraisal assistant for clinical prediction model papers."
     ),
+)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://localhost:5173",
+        "http://127.0.0.1:5173",
+    ],
+    allow_credentials=False,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 # Temporary in-memory document registry for the single-paper MVP.

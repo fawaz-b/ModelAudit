@@ -92,7 +92,7 @@ def test_response_schema_rejects_tripod_category():
     with pytest.raises(ValidationError):
         ProbastQuestionFinding(
             question_id="PE-1.3",
-            response="reported",
+            response="reported", # type: ignore[arg-type]
             explanation="Not a PROBAST response.",
         )
 
@@ -104,7 +104,7 @@ def test_directional_response_can_be_parsed_before_verification():
         explanation="Evidence suggests representativeness.",
         evidence=[
             {"quote": "The cohort was representative.", "page": 1, "chunk_id": "c1"}
-        ],
+            ],
     )
     assert finding.evidence_verified is False
 

@@ -214,9 +214,10 @@ async def run_tripod_audit(
 
         except (LLMQuotaError, LLMRateLimitError) as exc:
             logger.error(
-                "Stopping assessment after provider limit: item=%s error=%s",
+                "Stopping assessment after provider limit: item=%s error=%s details=%s",
                 item_id,
                 type(exc).__name__,
+                str(exc),
             )
             item_errors[item_id] = type(exc).__name__
             stop_reason = type(exc).__name__

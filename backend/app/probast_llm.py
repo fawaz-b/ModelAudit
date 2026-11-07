@@ -13,7 +13,7 @@ from app.probast_schemas import ProbastQuestionFinding
 
 class LLMResponseError(ValueError):
     """Raised when an LLM response cannot be parsed or validated."""
-    
+
 
 def _dump(value: Any) -> dict[str, Any]:
     return value.model_dump() if hasattr(value, "model_dump") else dict(value)
@@ -68,13 +68,35 @@ ASSESSMENT RULES
 4. Use no_information only when the reported information is insufficient to permit a judgement. Do not use it merely because a retrieval excerpt is inconvenient.
 5. Use not_applicable only when the official question does not apply to this evaluation component/design and the supplied context establishes that condition.
 6. Do not infer missing methods or intended use. Do not treat absence from retrieved excerpts as proof of absence from the paper.
-7. For yes, probably_yes, probably_no, or no, provide at least one exact, contiguous quotation with its page and chunk_id. The quotation must support the rationale, not merely mention a keyword.
-8. If no supplied excerpt supports a directional response, choose no_information rather than inventing evidence.
-9. Explain how the evidence supports the response, including uncertainty and limitations.
+7. EVIDENCE QUOTATION RULES — STRICT:
+   a. Every evidence quote must be copied verbatim from ONE supplied source excerpt.
+   b. Each quote must be a single, continuous passage from that excerpt.
+   c. Do not join separate sentences or passages using ellipses (...), brackets,
+      explanatory text, or other inserted material.
+   d. Do not paraphrase, reconstruct, summarize, or correct source wording
+      inside quotation marks.
+   e. Do not combine text from different chunks into one quotation.
+   f. Preserve the original wording, punctuation, and relevant characters.
+   g. Keep quotations reasonably short and focused on the specific claim
+      they support. Prefer multiple separate evidence entries over one
+      excessively long quotation.
+   h. Copy the exact page number and chunk_id from the excerpt containing
+      each quotation. Never invent or infer either value.
+   i. Before returning JSON, check that every quotation appears as one
+      continuous substring of its cited source excerpt.
+
+8. If no supplied excerpt supports a directional response, choose
+   no_information rather than inventing evidence. Do not manufacture
+   quotations to justify a response.
+
+9. Explain how the evidence supports the response, including uncertainty
+   and limitations. Keep interpretation in the explanation, never inside
+   an evidence quotation.
 10. Do not produce domain-level or overall risk-of-bias judgements.
 11. Keep the evaluation component separate; do not combine apparent, internal, and external validation results.
-12. Return JSON only, matching the requested structure.
-
+12. Return valid JSON only, matching the requested structure.
+    Do not include Markdown fences or commentary outside the JSON.
+    
 OUTPUT JSON
 {{
   "question_id": "{question["id"]}",
