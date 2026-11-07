@@ -1,6 +1,7 @@
 """Main entry point for the ModelAudit API."""
 
 import logging
+import os
 from dataclasses import asdict
 from functools import lru_cache
 from typing import Annotated
@@ -43,6 +44,11 @@ app.add_middleware(
     allow_origins=[
         "http://localhost:5173",
         "http://127.0.0.1:5173",
+        *[
+            origin.strip()
+            for origin in os.getenv("CORS_ORIGINS", "").split(",")
+            if origin.strip()
+        ],
     ],
     allow_credentials=False,
     allow_methods=["*"],
