@@ -1,4 +1,3 @@
-
 """LLM provider client, prompt construction and response parsing."""
 
 from __future__ import annotations
@@ -48,7 +47,11 @@ class LLMAdapter:
     def __init__(self, provider_name: str) -> None:
         self.provider_name = provider_name
 
-    async def generate(self, prompt: str) -> str:
+    async def generate(
+        self,
+        prompt: str,
+        system_instruction: str | None = None,
+    ) -> str:
         raise NotImplementedError
 
 
@@ -67,10 +70,7 @@ def _format_elements(elements: Sequence[dict[str, Any]]) -> str:
 
     for element in elements:
         requirement = "REQUIRED" if element["required"] else "OPTIONAL"
-        lines.append(
-            f"- {element['key']} ({requirement}): "
-            f"{element['description']}"
-        )
+        lines.append(f"- {element['key']} ({requirement}): {element['description']}")
 
     return "\n".join(lines)
 
@@ -104,16 +104,16 @@ You are assisting a human reviewer assessing reporting completeness
 in a clinical prediction model paper against TRIPOD+AI.
 
 FRAMEWORK ITEM
-{item['id']}: {item['official_item_text']}
+{item["id"]}: {item["official_item_text"]}
 
 ASSESSMENT TASK
-{item['assessment_prompt']}
+{item["assessment_prompt"]}
 
 REPORTING EXPECTATIONS
-{_compact_json(item.get('reporting_expectations', []))}
+{_compact_json(item.get("reporting_expectations", []))}
 
 ELEMENTS TO ASSESS
-{_format_elements(item['elements'])}
+{_format_elements(item["elements"])}
 
 STUDY TYPE
 {study_type}
@@ -122,10 +122,10 @@ GLOBAL RULES
 {_compact_json(list(global_rules or []))}
 
 ITEM-SPECIFIC RULES
-{_compact_json(item.get('item_rules', []))}
+{_compact_json(item.get("item_rules", []))}
 
 COMMON MISINTERPRETATIONS
-{_compact_json(item.get('common_misinterpretations', []))}
+{_compact_json(item.get("common_misinterpretations", []))}
 
 SOURCE EXCERPTS
 {_format_passages(passages)}
@@ -160,20 +160,20 @@ OUTPUT
 Return ONLY a JSON object:
 
 {{
-  "element_findings": [
-    {{
-      "element_key": "string",
-      "status": "reported | partially_reported | author_stated_unavailable | not_found_in_main_text | unclear | not_applicable",
-      "explanation": "string",
-      "evidence": [
+    "element_findings": [
         {{
-          "quote": "exact quotation, maximum 1000 characters",
-          "page": 1,
-          "chunk_id": "chunk identifier"
+            "element_key": "string",
+            "status": "reported | partially_reported | author_stated_unavailable | not_found_in_main_text | unclear | not_applicable",
+            "explanation": "string",
+            "evidence": [
+                {{
+                    "quote": "exact quotation, maximum 1000 characters",
+                    "page": 1,
+                    "chunk_id": "chunk identifier"
+                }}
+            ]
         }}
-      ]
-    }}
-  ]
+    ]
 }}
 """.strip()
 
@@ -276,8 +276,7 @@ def _is_quota_error(response: httpx.Response) -> bool:
 
         if isinstance(error, dict):
             message = " ".join(
-                str(error.get(key, ""))
-                for key in ("message", "type", "code", "status")
+                str(error.get(key, "")) for key in ("message", "type", "code", "status")
             )
         else:
             message = str(error)
@@ -316,7 +315,11 @@ class OpenAICompatibleAdapter(LLMAdapter):
     def __init__(self, provider_name: str):
         self.provider_name = provider_name
 
-    async def generate(self, prompt: str) -> str:
+    async def generate(
+        self,
+        prompt: str,
+        system_instruction: str | None = None,
+    ) -> str:
         provider = self.provider_name
         api_key = settings.llm_api_key.strip()
 
@@ -333,14 +336,18 @@ class OpenAICompatibleAdapter(LLMAdapter):
             "Authorization": f"Bearer {api_key}",
             "Content-Type": "application/json",
         }
+
         payload = {
             "model": settings.llm_model,
             "messages": [
                 {
                     "role": "system",
                     "content": (
-                        "You are a careful clinical prediction model reporting "
-                        "assessment assistant. Follow the requested JSON format."
+                        system_instruction
+                        or (
+                            "You are a careful clinical prediction model reporting "
+                            "assessment assistant. Follow the requested JSON format."
+                        )
                     ),
                 },
                 {"role": "user", "content": prompt},
@@ -352,9 +359,7 @@ class OpenAICompatibleAdapter(LLMAdapter):
 
         max_attempts = max(1, settings.llm_max_retries)
 
-        async with httpx.AsyncClient(
-            timeout=settings.llm_timeout_seconds
-        ) as client:
+        async with httpx.AsyncClient(timeout=settings.llm_timeout_seconds) as client:
             for attempt in range(max_attempts):
                 try:
                     response = await client.post(
@@ -383,12 +388,14 @@ class OpenAICompatibleAdapter(LLMAdapter):
                             if retry_after is not None
                             else min(2 ** (attempt + 1), 30)
                         )
+
                         if delay > 60:
                             raise LLMRateLimitError(
                                 f"{provider} requested a retry after "
                                 f"{delay:.1f} seconds; stopping this assessment "
                                 f"request: {details}"
                             )
+
                         await asyncio.sleep(delay)
                         continue
 
@@ -399,6 +406,7 @@ class OpenAICompatibleAdapter(LLMAdapter):
                                 f"{max_attempts} attempts: "
                                 f"{_provider_error_details(response)}"
                             )
+
                         await asyncio.sleep(min(2 ** (attempt + 1), 8))
                         continue
 
@@ -410,44 +418,52 @@ class OpenAICompatibleAdapter(LLMAdapter):
                         raise LLMResponseError(
                             f"{provider} returned empty response content."
                         )
+
                     return content
 
                 except (LLMQuotaError, LLMRateLimitError, LLMResponseError):
                     raise
+
                 except httpx.TimeoutException as exc:
                     if attempt + 1 == max_attempts:
                         raise LLMTimeoutError(
                             f"{provider} request timed out after "
                             f"{max_attempts} attempts."
                         ) from exc
+
                     await asyncio.sleep(min(2 ** (attempt + 1), 8))
+
                 except httpx.HTTPStatusError as exc:
                     status = exc.response.status_code
                     details = _provider_error_details(exc.response)
+
                     if status in (401, 403):
                         raise LLMConfigurationError(
                             f"{provider} authentication or permission failure: "
                             f"{details}"
                         ) from exc
+
                     raise LLMProviderError(
                         f"{provider} returned an unexpected HTTP error: {details}"
                     ) from exc
+
                 except httpx.RequestError as exc:
                     if attempt + 1 == max_attempts:
                         raise LLMProviderError(
                             f"Could not connect to {provider}."
                         ) from exc
+
                     await asyncio.sleep(min(2 ** (attempt + 1), 8))
+
                 except (KeyError, IndexError, TypeError, ValueError) as exc:
                     if isinstance(exc, LLMResponseError):
                         raise
+
                     raise LLMResponseError(
                         f"{provider} returned an unexpected response structure."
                     ) from exc
 
-        raise LLMProviderError(
-            f"{provider} request failed after all retry attempts."
-        )
+        raise LLMProviderError(f"{provider} request failed after all retry attempts.")
 
 
 # Registry keys are configuration values, not provider-specific branches in
@@ -465,8 +481,10 @@ def register_provider_adapter(
 ) -> None:
     """Register a provider adapter without changing audit orchestration."""
     key = provider_name.strip().lower()
+
     if not key:
         raise ValueError("Provider name cannot be empty.")
+
     _PROVIDER_ADAPTERS[key] = adapter_class
 
 
@@ -474,18 +492,25 @@ def get_provider_adapter() -> LLMAdapter:
     """Build the adapter selected by LLM_PROVIDER."""
     provider = settings.llm_provider.strip().lower()
     adapter_class = _PROVIDER_ADAPTERS.get(provider)
+
     if adapter_class is None:
         supported = ", ".join(sorted(_PROVIDER_ADAPTERS))
         raise LLMConfigurationError(
-            f"Unsupported LLM_PROVIDER '{provider}'. "
-            f"Registered providers: {supported}."
+            f"Unsupported LLM_PROVIDER '{provider}'. Registered providers: {supported}."
         )
+
     return adapter_class(provider)
 
 
-async def generate_item_response(prompt: str) -> str:
+async def generate_item_response(
+    prompt: str,
+    system_instruction: str | None = None,
+) -> str:
     """Generate a response through the configured provider adapter."""
-    return await get_provider_adapter().generate(prompt)
+    return await get_provider_adapter().generate(
+        prompt,
+        system_instruction=system_instruction,
+    )
 
 
 def parse_item_response(response: str) -> dict[str, ElementFinding]:
@@ -508,9 +533,7 @@ def parse_item_response(response: str) -> dict[str, ElementFinding]:
     try:
         payload = json.loads(cleaned)
     except json.JSONDecodeError as exc:
-        raise LLMResponseError(
-            f"LLM response is not valid JSON: {exc}"
-        ) from exc
+        raise LLMResponseError(f"LLM response is not valid JSON: {exc}") from exc
 
     if not isinstance(payload, Mapping):
         raise LLMResponseError("LLM response must be a JSON object.")
@@ -518,9 +541,7 @@ def parse_item_response(response: str) -> dict[str, ElementFinding]:
     raw_findings = payload.get("element_findings")
 
     if not isinstance(raw_findings, list):
-        raise LLMResponseError(
-            "Response must contain an element_findings list."
-        )
+        raise LLMResponseError("Response must contain an element_findings list.")
 
     findings: dict[str, ElementFinding] = {}
 
@@ -528,14 +549,10 @@ def parse_item_response(response: str) -> dict[str, ElementFinding]:
         try:
             finding = ElementFinding.model_validate(raw_finding)
         except ValidationError as exc:
-            raise LLMResponseError(
-                f"Invalid element finding: {exc}"
-            ) from exc
+            raise LLMResponseError(f"Invalid element finding: {exc}") from exc
 
         if finding.element_key in findings:
-            raise LLMResponseError(
-                f"Duplicate element finding: {finding.element_key}"
-            )
+            raise LLMResponseError(f"Duplicate element finding: {finding.element_key}")
 
         findings[finding.element_key] = finding
 

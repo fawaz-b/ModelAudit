@@ -20,15 +20,7 @@ async def test_generate_item_response_success(monkeypatch):
         return httpx.Response(
             200,
             request=httpx.Request("POST", url),
-            json={
-                "choices": [
-                    {
-                        "message": {
-                            "content": '{"element_findings": []}'
-                        }
-                    }
-                ]
-            },
+            json={"choices": [{"message": {"content": '{"element_findings": []}'}}]},
         )
 
     monkeypatch.setattr(httpx.AsyncClient, "post", mock_post)

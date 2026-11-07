@@ -1,4 +1,3 @@
-
 """Main entry point for the ModelAudit API."""
 
 import logging
@@ -17,6 +16,8 @@ from app.ingest import (
     ProcessedDocument,
     process_pdf,
 )
+from app.probast_audit import run_probast_audit
+from app.probast_schemas import ProbastAssessment, ProbastAssessmentRequest
 from app.retrieval import DEFAULT_EMBEDDING_MODEL, HybridRetriever
 from app.schemas import (
     FrameworkAssessment,
@@ -225,4 +226,47 @@ async def assess_document(
         raise HTTPException(
             status_code=500,
             detail="The assessment could not be completed.",
+        ) from exc
+
+
+@app.post(
+    "/documents/{document_id}/assess/probast",
+    response_model=ProbastAssessment,
+)
+async def assess_document_probast(
+    document_id: str,
+    request: ProbastAssessmentRequest,
+):
+    """Run the selected PROBAST+AI model-evaluation subset."""
+
+    if request.document_id != document_id:
+        raise HTTPException(
+            status_code=422,
+            detail="Request document_id must match the URL document_id.",
+        )
+
+    try:
+        retriever = get_document_retriever(document_id)
+
+        assessment = await run_probast_audit(
+            document_id=document_id,
+            retriever=retriever,
+            context=request.context,
+            model_identifier=request.model_identifier,
+        )
+
+        return assessment
+
+    except HTTPException:
+        raise
+
+    except Exception as exc:
+        logger.exception(
+            "PROBAST+AI assessment failed for document %s",
+            document_id,
+        )
+
+        raise HTTPException(
+            status_code=500,
+            detail="The PROBAST+AI assessment could not be completed.",
         ) from exc

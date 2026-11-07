@@ -22,9 +22,7 @@ def _as_dict(value: Any) -> dict[str, Any]:
         return value.model_dump()
     if isinstance(value, Mapping):
         return dict(value)
-    raise TypeError(
-        f"Expected a mapping or Pydantic model, got {type(value)}"
-    )
+    raise TypeError(f"Expected a mapping or Pydantic model, got {type(value)}")
 
 
 def assess_item(
@@ -101,9 +99,7 @@ def assess_item(
                     ),
                 }
             )
-            review_flags.append(
-                f"retrieval_may_be_incomplete:{element_key}"
-            )
+            review_flags.append(f"retrieval_may_be_incomplete:{element_key}")
 
         verified_findings.append(finding)
         findings_for_derivation[element_key] = {
@@ -131,9 +127,7 @@ def assess_framework(
     framework: dict[str, Any],
     document_id: str,
     study_context: StudyContext,
-    findings_by_item: Mapping[
-        str, Mapping[str, ElementFinding | Mapping[str, Any]]
-    ],
+    findings_by_item: Mapping[str, Mapping[str, ElementFinding | Mapping[str, Any]]],
     passages: Sequence[RetrievedPassage | Mapping[str, Any]],
     not_assessed_items: Mapping[str, str] | None = None,
 ) -> FrameworkAssessment:
@@ -165,7 +159,5 @@ def assess_framework(
         document_id=document_id,
         study_context=study_context,
         items=item_assessments,
-        assessment_status=(
-            "requires_review" if requires_review else "completed"
-        ),
+        assessment_status=("requires_review" if requires_review else "completed"),
     )

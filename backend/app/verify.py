@@ -22,9 +22,7 @@ def _as_dict(value: Any) -> dict[str, Any]:
         return value.model_dump()
     if isinstance(value, Mapping):
         return dict(value)
-    raise TypeError(
-        f"Expected a mapping or Pydantic model, got {type(value)}"
-    )
+    raise TypeError(f"Expected a mapping or Pydantic model, got {type(value)}")
 
 
 def normalise_evidence_text(text: str) -> str:

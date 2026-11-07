@@ -1,16 +1,24 @@
 """Load and validate the data-driven TRIPOD+AI MVP framework."""
+
 from __future__ import annotations
 
 import json
 from pathlib import Path
 from typing import Any
 
-FRAMEWORK_PATH = Path(__file__).resolve().parents[1] / "framework" / "tripod_ai_subset.json"
+FRAMEWORK_PATH = (
+    Path(__file__).resolve().parents[1] / "framework" / "tripod_ai_subset.json"
+)
 VALID_CATEGORIES = {
-    "reported", "partially_reported", "author_stated_unavailable",
-    "not_found_in_main_text", "unclear", "not_applicable",
+    "reported",
+    "partially_reported",
+    "author_stated_unavailable",
+    "not_found_in_main_text",
+    "unclear",
+    "not_applicable",
 }
 VALID_OPERATORS = {"equals", "in"}
+
 
 class FrameworkError(ValueError):
     """Raised when a framework definition is malformed."""
@@ -47,7 +55,9 @@ def validate_framework(framework: dict[str, Any]) -> None:
             or item_condition.get("operator") not in VALID_OPERATORS
             or "value" not in item_condition
         ):
-            raise FrameworkError(f"Invalid item-level applies_when condition on {item_id}.")
+            raise FrameworkError(
+                f"Invalid item-level applies_when condition on {item_id}."
+            )
         elements = item.get("elements")
         if not isinstance(elements, list) or not elements:
             raise FrameworkError(f"{item_id} must contain a non-empty elements list.")
@@ -60,7 +70,9 @@ def validate_framework(framework: dict[str, Any]) -> None:
                 raise FrameworkError(f"Duplicate element key {item_id}.{key}")
             element_keys.add(key)
             if not isinstance(element.get("required"), bool):
-                raise FrameworkError(f"{item_id}.{key} must define required as a boolean.")
+                raise FrameworkError(
+                    f"{item_id}.{key} must define required as a boolean."
+                )
             condition = element.get("applies_when")
             if condition is not None:
                 if (
@@ -69,17 +81,25 @@ def validate_framework(framework: dict[str, Any]) -> None:
                     or condition.get("operator") not in VALID_OPERATORS
                     or "value" not in condition
                 ):
-                    raise FrameworkError(f"Invalid applies_when condition on {item_id}.{key}.")
+                    raise FrameworkError(
+                        f"Invalid applies_when condition on {item_id}.{key}."
+                    )
         scheme = item.get("judgement_categories")
         if scheme is not None and not isinstance(scheme, list):
-            raise FrameworkError(f"{item_id}.judgement_categories must be a list when present.")
+            raise FrameworkError(
+                f"{item_id}.judgement_categories must be a list when present."
+            )
     categories = framework.get("judgement_scheme", {}).get("categories", {})
     missing = VALID_CATEGORIES - set(categories)
     if missing:
-        raise FrameworkError(f"Missing judgement category definitions: {sorted(missing)}")
+        raise FrameworkError(
+            f"Missing judgement category definitions: {sorted(missing)}"
+        )
 
 
-def condition_applies(condition: dict[str, Any] | None, study_context: dict[str, Any]) -> bool | None:
+def condition_applies(
+    condition: dict[str, Any] | None, study_context: dict[str, Any]
+) -> bool | None:
     """Return True/False; None means the condition cannot yet be resolved."""
     if condition is None:
         return True
@@ -104,9 +124,19 @@ def derive_item_judgement(
     context = study_context or {}
     item_applies = condition_applies(item.get("applies_when"), context)
     if item_applies is False:
-        return {"category": "not_applicable", "required_elements": [], "unresolved_conditions": [], "flags": []}
+        return {
+            "category": "not_applicable",
+            "required_elements": [],
+            "unresolved_conditions": [],
+            "flags": [],
+        }
     if item_applies is None:
-        return {"category": "unclear", "required_elements": [], "unresolved_conditions": ["item_applicability"], "flags": ["study_context_incomplete"]}
+        return {
+            "category": "unclear",
+            "required_elements": [],
+            "unresolved_conditions": ["item_applicability"],
+            "flags": ["study_context_incomplete"],
+        }
     applicable: list[tuple[dict[str, Any], dict[str, Any]]] = []
     unresolved_conditions: list[str] = []
 
@@ -127,7 +157,12 @@ def derive_item_judgement(
             "flags": ["study_context_incomplete"],
         }
     if not required:
-        return {"category": "not_applicable", "required_elements": [], "unresolved_conditions": [], "flags": []}
+        return {
+            "category": "not_applicable",
+            "required_elements": [],
+            "unresolved_conditions": [],
+            "flags": [],
+        }
 
     statuses: list[str] = []
     flags: list[str] = []
@@ -136,7 +171,10 @@ def derive_item_judgement(
         if status not in VALID_CATEGORIES:
             status = "unclear"
             flags.append(f"invalid_status:{element['key']}")
-        if status in {"reported", "partially_reported"} and finding.get("evidence_verified") is not True:
+        if (
+            status in {"reported", "partially_reported"}
+            and finding.get("evidence_verified") is not True
+        ):
             status = "unclear"
             flags.append(f"evidence_unverified:{element['key']}")
         statuses.append(status)

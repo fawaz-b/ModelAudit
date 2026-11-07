@@ -1,4 +1,3 @@
-
 """Orchestration of the TRIPOD+AI reporting assessment."""
 
 from __future__ import annotations
@@ -30,6 +29,7 @@ logger = logging.getLogger(__name__)
 RETRIEVAL_TOP_K = 4
 MAX_PASSAGES_PER_ITEM = 4
 RRF_CONSTANT = 60
+
 
 class AuditRetriever(Protocol):
     """Structural interface required by the audit pipeline."""
@@ -67,9 +67,8 @@ def retrieve_item_passages(
             chunk_id = chunk.chunk_id
 
             chunks[chunk_id] = chunk
-            fused_scores[chunk_id] = (
-                fused_scores.get(chunk_id, 0.0)
-                + 1.0 / (RRF_CONSTANT + result.rank)
+            fused_scores[chunk_id] = fused_scores.get(chunk_id, 0.0) + 1.0 / (
+                RRF_CONSTANT + result.rank
             )
 
     ranked = sorted(
@@ -222,7 +221,7 @@ async def run_tripod_audit(
             item_errors[item_id] = type(exc).__name__
             stop_reason = type(exc).__name__
             not_assessed_items[item_id] = stop_reason
-            for remaining_item in framework["items"][item_index + 1:]:
+            for remaining_item in framework["items"][item_index + 1 :]:
                 not_assessed_items[remaining_item["id"]] = stop_reason
             break
 
@@ -285,11 +284,7 @@ async def run_tripod_audit(
         "stop_reason=%s elapsed=%.2fs",
         document_id,
         assessment.assessment_status,
-        sum(
-        1
-        for item_id in findings_by_item
-        if item_id not in item_errors
-        ),
+        sum(1 for item_id in findings_by_item if item_id not in item_errors),
         len(item_errors),
         len(not_assessed_items),
         stop_reason,

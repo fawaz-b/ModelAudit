@@ -8,6 +8,7 @@ from pydantic import BaseModel, ConfigDict, Field, field_validator
 # Shared configuration
 # ---------------------------------------------------------------------------
 
+
 class StrictBaseModel(BaseModel):
     """Base model that rejects unexpected fields."""
 
@@ -17,6 +18,7 @@ class StrictBaseModel(BaseModel):
 # ---------------------------------------------------------------------------
 # Retrieval schemas — existing API
 # ---------------------------------------------------------------------------
+
 
 class RetrievalRequest(StrictBaseModel):
     """Request parameters for retrieving evidence from a document."""
@@ -72,6 +74,7 @@ class RetrievalResponse(StrictBaseModel):
 # ---------------------------------------------------------------------------
 # Assessment request and study context
 # ---------------------------------------------------------------------------
+
 
 class StudyContext(StrictBaseModel):
     """
@@ -189,6 +192,7 @@ class ElementFinding(StrictBaseModel):
 # Item-level assessment
 # ---------------------------------------------------------------------------
 
+
 class ItemAssessment(StrictBaseModel):
     """Assessment of one TRIPOD+AI checklist item."""
 
@@ -215,6 +219,7 @@ class ItemAssessment(StrictBaseModel):
 # ---------------------------------------------------------------------------
 # Complete framework assessment
 # ---------------------------------------------------------------------------
+
 
 class FrameworkAssessment(StrictBaseModel):
     """Complete assessment against one reporting framework."""

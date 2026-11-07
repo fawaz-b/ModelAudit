@@ -1,4 +1,3 @@
-
 """Application configuration and environment settings."""
 
 from pathlib import Path
@@ -21,9 +20,7 @@ class Settings(BaseSettings):
     # LLM provider configuration
     llm_provider: str = "gemini"
     llm_model: str = "gemini-3.8-flash"
-    llm_base_url: str = (
-        "https://generativelanguage.googleapis.com/v1beta/openai/"
-    )
+    llm_base_url: str = "https://generativelanguage.googleapis.com/v1beta/openai/"
     llm_api_key: str = ""
 
     llm_timeout_seconds: int = 90

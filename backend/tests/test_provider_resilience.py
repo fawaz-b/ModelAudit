@@ -1,4 +1,3 @@
-
 from types import SimpleNamespace
 from typing import Any
 
@@ -114,10 +113,7 @@ async def test_quota_exhaustion_stops_audit_and_marks_remaining_items(
     ]
 
     assert all(
-        any(
-            flag.startswith("assessment_not_run:")
-            for flag in item.flags
-        )
+        any(flag.startswith("assessment_not_run:") for flag in item.flags)
         for item in result.items
     )
 
@@ -237,20 +233,12 @@ async def test_quota_exhaustion_preserves_completed_findings(monkeypatch):
     assert first_finding.element_key == "e1"
     assert first_finding.status == "reported"
     assert first_finding.evidence_verified is True
-    assert first_finding.explanation == (
-        "The paper reports this element."
-    )
+    assert first_finding.explanation == ("The paper reports this element.")
 
     # The item where quota exhaustion occurred was not assessed.
     assert second_item.category == "not_assessed"
-    assert any(
-        flag.startswith("assessment_error:")
-        for flag in second_item.flags
-    )
+    assert any(flag.startswith("assessment_error:") for flag in second_item.flags)
 
     # The subsequent item was never attempted.
     assert third_item.category == "not_assessed"
-    assert any(
-        flag.startswith("assessment_not_run:")
-        for flag in third_item.flags
-    )
+    assert any(flag.startswith("assessment_not_run:") for flag in third_item.flags)

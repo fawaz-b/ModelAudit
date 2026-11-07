@@ -1,4 +1,3 @@
-
 import pytest
 from app.framework import (
     FrameworkError,
@@ -13,19 +12,45 @@ def test_framework_loads_and_has_exact_mvp_item_set():
     framework = load_framework()
     assert len(framework["items"]) == 14
     assert {item["id"] for item in framework["items"]} == {
-        "T-3b", "T-5a", "T-5b", "T-6a", "T-6b", "T-8a", "T-9b",
-        "T-10", "T-11", "T-12e", "T-16", "T-18e", "T-18f", "T-23a",
+        "T-3b",
+        "T-5a",
+        "T-5b",
+        "T-6a",
+        "T-6b",
+        "T-8a",
+        "T-9b",
+        "T-10",
+        "T-11",
+        "T-12e",
+        "T-16",
+        "T-18e",
+        "T-18f",
+        "T-23a",
     }
 
 
 def test_duplicate_element_keys_are_rejected():
-    framework = {"items": [{"id": "T-X", "elements": [
-        {"key": "same", "required": True},
-        {"key": "same", "required": False},
-    ]}], "judgement_scheme": {"categories": {
-        "reported": "", "partially_reported": "", "author_stated_unavailable": "",
-        "not_found_in_main_text": "", "unclear": "", "not_applicable": "",
-    }}}
+    framework = {
+        "items": [
+            {
+                "id": "T-X",
+                "elements": [
+                    {"key": "same", "required": True},
+                    {"key": "same", "required": False},
+                ],
+            }
+        ],
+        "judgement_scheme": {
+            "categories": {
+                "reported": "",
+                "partially_reported": "",
+                "author_stated_unavailable": "",
+                "not_found_in_main_text": "",
+                "unclear": "",
+                "not_applicable": "",
+            }
+        },
+    }
     with pytest.raises(FrameworkError, match="Duplicate element key"):
         validate_framework(framework)
 
@@ -53,7 +78,9 @@ def test_missing_study_context_does_not_silently_mark_not_applicable():
 
 
 def test_all_required_elements_reported_derives_reported():
-    item = {"elements": [{"key": "a", "required": True}, {"key": "b", "required": True}]}
+    item = {
+        "elements": [{"key": "a", "required": True}, {"key": "b", "required": True}]
+    }
     findings = {
         "a": {"status": "reported", "evidence_verified": True},
         "b": {"status": "reported", "evidence_verified": True},
@@ -71,7 +98,9 @@ def test_unverified_quote_downgrades_to_unclear():
 
 
 def test_mix_of_reported_and_not_found_is_partial():
-    item = {"elements": [{"key": "a", "required": True}, {"key": "b", "required": True}]}
+    item = {
+        "elements": [{"key": "a", "required": True}, {"key": "b", "required": True}]
+    }
     findings = {
         "a": {"status": "reported", "evidence_verified": True},
         "b": {"status": "not_found_in_main_text"},

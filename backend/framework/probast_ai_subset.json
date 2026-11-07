@@ -6,7 +6,8 @@
   "branch_meaning": {
     "term": "Model evaluation: assesses risk of bias in the predictive performance estimates.",
     "not_to_be_confused_with": "Model development, which assesses quality, not bias.",
-    "source": "Moons et al, BMJ 2025;388:e082505, pp. 8-9"
+    "source": "Moons et al, BMJ 2025;388:e082505, pp. 8-9",
+    "modelaudit_scope": "ModelAudit currently implements an eight-question subset of the model-evaluation branch only; it is not a complete PROBAST+AI assessment and cannot support official domain-level or overall judgements."
   },
   "licence": {
     "name": "CC BY-NC 4.0",
@@ -17,17 +18,17 @@
   "attribution": "Question numbering, question wording, domain names and response options are from Moons KGM, Damen JAA, Kaul T, et al. PROBAST+AI: an updated quality, risk of bias, and applicability assessment tool for prediction models using regression or artificial intelligence methods. BMJ 2025;388:e082505, CC BY-NC 4.0. Lineage information is from the PROBAST+AI Supplementals (Supplementary table 5). Content under the modelaudit key and all ModelAudit decisions are original to this project and are not endorsed by the PROBAST+AI authors.",
   "source_status": {
     "verified_from": [
-      "Moons et al, BMJ 2025;388:e082505: Table 2 (p. 8), Box 1 (pp. 3-4), text on steps, judgements and applicability (pp. 9-11), Discussion (p. 12)",
-      "PROBAST+AI Supplementals (probast.org), Supplementary table 5 (pp. 4-6)"
+      "Moons et al. BMJ 2025;388:e082505: Table 2 (p. 8), Box 1 (pp. 3-4), evaluation types, assessment steps, judgements and applicability (pp. 9-11), Discussion (p. 12)",
+      "PROBAST+AI Supplementary Table 3: official assessment tool and procedure, including domain and overall judgement guidance",
+      "PROBAST+AI Supplementary Table 4: Explanation and Elaboration Light, including guidance for the selected questions",
+      "PROBAST+AI Supplementary Table 5: lineage and comparison with PROBAST-2019"
     ],
-    "not_obtained": [
-      "Supplementary table 3 (the PROBAST+AI tool, including Step 4 guidance)",
-      "Supplementary table 4 (Explanation and Elaboration Light, per-question guidance)"
-    ],
-    "where_to_get_them": [
-      "https://www.probast.org/probast_ai/downloads/ (PROBAST+AI tool and PROBAST+AI Explanation & Elaboration)"
-    ],
-    "consequence": "Per-question official guidance and the official domain-judgement and overall-judgement guidance are not encoded. Fields that would hold them are marked not extracted."
+    "review_status": "Supplementary Tables 3 and 4 have been obtained and reviewed. Selected-question guidance has been added below.",
+    "scope_note": "This configuration contains eight selected questions from the model-evaluation branch; it is not the complete PROBAST+AI tool.",
+    "remaining_limitations": [
+      "The subset cannot support official PROBAST+AI domain-level or overall risk-of-bias judgements.",
+      "PE-4.4 and PE-4.6 are omitted, limiting Analysis-domain coverage."
+    ]
   },
   "provenance_key": {
     "official": "Taken from the PROBAST+AI paper or supplementals, with page or table reference.",
@@ -124,7 +125,9 @@
         "text": "No overall (Step 4) risk-of-bias judgement and no numeric score are produced in the MVP.",
         "status": "proposed"
       }
-    ]
+    ],
+    "official_guidance_status": "Official domain-level and overall judgement procedures have been reviewed in Supplementary Table 3. They are not applied to this eight-question subset because it does not cover all signalling questions in any domain.",
+    "modelaudit_scope_warning": "Do not generate or imply official PROBAST+AI domain-level or overall risk-of-bias judgements from this incomplete subset. Report question-level findings, evidence, uncertainty, and domain coverage counts with an explicit incomplete-coverage warning."
   },
   "applicability_assessment": {
     "official": {
@@ -154,7 +157,8 @@
         "text": "Applicability judgements are never merged with risk-of-bias judgements, and are stored in a separate structure.",
         "status": "proposed"
       }
-    ]
+    ],
+    "modelaudit_scope_warning": "Applicability is separate from risk of bias and depends on the review question and intended use (PICOTS). Do not infer intended use from the paper alone. Leave applicability unassessed unless the reviewer supplies the relevant review context."
   },
   "assessment_context": {
     "step1_picots": {
@@ -213,7 +217,7 @@
           "source": "Moons et al, BMJ 2025;388:e082505, Discussion, p. 12"
         }
       ],
-      "official_guidance_status": "Supplementary table 4 (Explanation and Elaboration Light) not extracted. Add its guidance for this question before relying on modelaudit.evidence_focus.",
+      "official_guidance_status": "Reviewed and summarized from PROBAST+AI Supplementary Table 4 (Explanation and Elaboration Light); see official_guidance.source.",
       "modelaudit": {
         "origin": "ModelAudit operational content. Not official PROBAST+AI text.",
         "evidence_focus": [
@@ -233,6 +237,16 @@
         "depends_on": [
           "intended_use_or_target_population"
         ]
+      },
+      "official_guidance": {
+        "summary": "Judge representativeness relative to the population relevant to the model's intended use; representativeness is contextual.",
+        "points": [
+          "Review eligibility criteria, recruitment or sampling, inclusions, exclusions, and who is missing or over-represented.",
+          "Consider whether selection could distort performance estimates overall or in relevant subgroups, including disadvantaged or marginalised groups.",
+          "If the intended population or information needed to judge representativeness is not reported, do not infer that the dataset is representative or non-representative; use No information when the report is insufficient.",
+          "Distinguish exclusions that determine who enters the evaluation dataset from post-enrolment exclusions due to missing or censored data, which are considered under PE-4.3."
+        ],
+        "source": "PROBAST+AI Supplementary Table 4, Explanation and Elaboration Light, PE-1.3, p. 9"
       }
     },
     {
@@ -255,7 +269,7 @@
         "source": "PROBAST+AI Supplementals (probast.org), Supplementary table 5, p. 4"
       },
       "official_notes": [],
-      "official_guidance_status": "Supplementary table 4 (Explanation and Elaboration Light) not extracted. Add its guidance for this question before relying on modelaudit.evidence_focus.",
+      "official_guidance_status": "Reviewed and summarized from PROBAST+AI Supplementary Table 4 (Explanation and Elaboration Light); see official_guidance.source.",
       "modelaudit": {
         "origin": "ModelAudit operational content. Not official PROBAST+AI text.",
         "evidence_focus": [
@@ -275,6 +289,16 @@
         "depends_on": [
           "intended_use_or_target_population"
         ]
+      },
+      "official_guidance": {
+        "summary": "Assess whether every predictor used by the evaluated model would be available at the actual intended point of use in the care pathway.",
+        "points": [
+          "Establish the intended prediction time or decision point, then compare it with when each predictor is measured or becomes available.",
+          "A predictor measured only after the intended prediction time may introduce bias or make the model unusable at that point; for example, an intraoperative or postoperative variable is unavailable for a genuinely preoperative prediction.",
+          "This is not asking whether all potentially useful predictors were collected or whether predictor values were missing. Missing predictor data and their handling belong to the Analysis domain.",
+          "A predictor being present in the research dataset does not establish that it would be available at the intended point of use."
+        ],
+        "source": "PROBAST+AI Supplementary Table 4, Explanation and Elaboration Light, PE-2.4, p. 11"
       }
     },
     {
@@ -297,7 +321,7 @@
         "source": "PROBAST+AI Supplementals (probast.org), Supplementary table 5, pp. 4-5"
       },
       "official_notes": [],
-      "official_guidance_status": "Supplementary table 4 (Explanation and Elaboration Light) not extracted. Add its guidance for this question before relying on modelaudit.evidence_focus.",
+      "official_guidance_status": "Reviewed and summarized from PROBAST+AI Supplementary Table 4 (Explanation and Elaboration Light); see official_guidance.source.",
       "modelaudit": {
         "origin": "ModelAudit operational content. Not official PROBAST+AI text.",
         "evidence_focus": [
@@ -316,6 +340,17 @@
           "Appropriateness is a judgement. If the paper gives too little detail, answer no information."
         ],
         "depends_on": []
+      },
+      "official_guidance": {
+        "summary": "Assess whether the outcome was defined and measured using a suitable and sufficiently consistent reference.",
+        "points": [
+          "Consider the outcome definition, measurement method, timing, assessor, and reference standard, including measurement error or misclassification.",
+          "Consider whether a standard or prespecified definition was used. Non-standard definitions, data-driven thresholds, or thresholds selected after examining the data can make outcome classification less reliable or introduce bias.",
+          "For composite outcomes, examine whether components are clearly defined and whether combining them is appropriate; components may differ in importance or ascertainment.",
+          "Consider whether routine-care records, registries, or other data sources may apply inconsistent definitions or less reliable ascertainment.",
+          "Merely naming the outcome does not show that it was defined and assessed appropriately. If detail is insufficient to judge, use No information."
+        ],
+        "source": "PROBAST+AI Supplementary Table 4, Explanation and Elaboration Light, PE-3.1, pp. 5 and 12"
       }
     },
     {
@@ -331,7 +366,27 @@
       },
       "response_scale": "standard",
       "not_applicable_allowed": false,
-      "conditional_rule": null,
+      "conditional_rule": {
+        "type": "evaluation_component_dependent",
+        "components": {
+          "apparent_only": {
+            "pe_4_1_answer": "no",
+            "subsequent_internal_external_specific_questions": "not_relevant_to_this_component"
+          },
+          "internal_validation": {
+            "pe_4_1_answer": "assess_whether_only_apparent_performance_was_avoided",
+            "subsequent_questions": "assess_when_applicable_to_the_internal_validation_design"
+          },
+          "external_validation": {
+            "pe_4_1_answer": "yes_if_based_on_independent_participant_data_and_not_only_apparent_performance",
+            "subsequent_questions": "assess_when_applicable_to_the_external_evaluation"
+          },
+          "multiple_components": "Assess each component separately; do not collapse apparent, internal, and external evaluations.",
+          "unclear_component": "Do not infer the component; use no_information or request reviewer clarification."
+        },
+        "source": "PROBAST+AI Supplementary Table 4, PE-4.1, p. 14; Supplementary Table 3",
+        "machine_checkable": "Partially; requires reviewer-verified evaluation-component classification."
+      },
       "lineage": {
         "probast_2019": "None",
         "change": "New item",
@@ -347,7 +402,7 @@
           "source": "Moons et al, BMJ 2025;388:e082505, p. 9 and p. 11"
         }
       ],
-      "official_guidance_status": "Supplementary table 4 (Explanation and Elaboration Light) not extracted. Add its guidance for this question before relying on modelaudit.evidence_focus.",
+      "official_guidance_status": "Reviewed and summarized from PROBAST+AI Supplementary Table 4 (Explanation and Elaboration Light); see official_guidance.source.",
       "modelaudit": {
         "origin": "ModelAudit operational content. Not official PROBAST+AI text.",
         "evidence_focus": [
@@ -365,6 +420,17 @@
         "depends_on": [
           "evaluation_component"
         ]
+      },
+      "official_guidance": {
+        "summary": "Identify the evaluation component and assess whether evaluation based only on development data (apparent performance) was avoided.",
+        "points": [
+          "Apparent performance is estimated using the same participants/data used to develop the model and is generally optimistic.",
+          "Internal validation estimates performance using the development dataset with a validation procedure such as resampling or a training/test split. External validation uses participant data independent of development data and internal validation.",
+          "Assess each reported component separately: apparent, internal validation, and external validation are not interchangeable.",
+          "If the only reported evaluation is apparent performance, the answer to PE-4.1 is No. Subsequent questions specific to internal and external validation are not relevant to that apparent-only component and must not be forced into Yes/No answers.",
+          "If multiple components are reported, retain separate component-level assessments rather than collapsing them into one answer."
+        ],
+        "source": "PROBAST+AI Supplementary Table 4, Explanation and Elaboration Light, PE-4.1, p. 14; Supplementary Table 3"
       }
     },
     {
@@ -392,7 +458,7 @@
           "source": "Moons et al, BMJ 2025;388:e082505, p. 9 and Box 1, p. 3"
         }
       ],
-      "official_guidance_status": "Supplementary table 4 (Explanation and Elaboration Light) not extracted. Add its guidance for this question before relying on modelaudit.evidence_focus.",
+      "official_guidance_status": "Reviewed and summarized from PROBAST+AI Supplementary Table 4 (Explanation and Elaboration Light); see official_guidance.source.",
       "modelaudit": {
         "origin": "ModelAudit operational content. Not official PROBAST+AI text.",
         "evidence_focus": [
@@ -410,6 +476,17 @@
           "Development sample size is not evaluation sample size."
         ],
         "depends_on": []
+      },
+      "official_guidance": {
+        "summary": "Assess whether the evaluation sample size was reasonable. Distinguish systematic bias from statistical imprecision.",
+        "points": [
+          "Consider the number of participants and outcome events in the evaluation sample, the distribution of predicted risks, performance measures, and relevant subgroup analyses.",
+          "Consider whether a sample-size justification or other evidence supports the adequacy of the evaluation sample.",
+          "Small samples can produce imprecise estimates and wide confidence intervals. Imprecision is not itself the same as risk of bias, although it affects confidence in the performance estimate.",
+          "Do not apply simplistic rules of thumb (such as a fixed minimum event count) as automatic pass/fail thresholds; adequacy depends on the evaluation context and required precision.",
+          "Do not substitute development sample size for the size of the dataset used to evaluate performance."
+        ],
+        "source": "PROBAST+AI Supplementary Table 4, Explanation and Elaboration Light, PE-4.2, p. 14"
       }
     },
     {
@@ -432,7 +509,7 @@
         "source": "PROBAST+AI Supplementals (probast.org), Supplementary table 5, p. 5"
       },
       "official_notes": [],
-      "official_guidance_status": "Supplementary table 4 (Explanation and Elaboration Light) not extracted. Add its guidance for this question before relying on modelaudit.evidence_focus.",
+      "official_guidance_status": "Reviewed and summarized from PROBAST+AI Supplementary Table 4 (Explanation and Elaboration Light); see official_guidance.source.",
       "modelaudit": {
         "origin": "ModelAudit operational content. Not official PROBAST+AI text.",
         "evidence_focus": [
@@ -450,6 +527,19 @@
           "If the paper states there were no missing data, record that as the evidence."
         ],
         "depends_on": []
+      },
+      "official_guidance": {
+        "summary": "Assess whether missing or censored observations and exclusions due to them were handled appropriately in performance evaluation.",
+        "points": [
+          "Identify the amount and pattern of missingness or censoring, affected variables, and the number and characteristics of participants excluded from analysis.",
+          "Consider whether complete-case analysis or other exclusions could selectively remove participants and distort the evaluation sample or performance estimates.",
+          "Consider the plausibility of the missingness mechanism, including missing not at random. No universal missing-data percentage automatically determines acceptability.",
+          "Consider whether the selected approach (for example, imputation or an intended-use missing-data strategy) was appropriate and implemented without information leakage.",
+          "For time-to-event outcomes, consider censoring and competing risks where relevant.",
+          "A statement that data were missing is not enough to establish appropriate handling. An explicit report of no missing data is relevant evidence.",
+          "If the report does not provide enough information to judge handling, use No information rather than assuming it was appropriate."
+        ],
+        "source": "PROBAST+AI Supplementary Table 4, Explanation and Elaboration Light, PE-4.3, p. 15"
       }
     },
     {
@@ -466,11 +556,16 @@
       "response_scale": "standard",
       "not_applicable_allowed": true,
       "conditional_rule": {
-        "type": "conditional_on_study_design",
-        "condition": "Data splitting was done to create training and test datasets.",
-        "when_condition_false": "not_applicable",
-        "source": "Moons et al, BMJ 2025;388:e082505, Table 2, p. 8 (the condition is part of the question wording) and p. 10 (not applicable option)",
-        "machine_checkable": false
+        "type": "evaluation_component_and_validation_design_dependent",
+        "applicability_by_component": {
+          "apparent": "not_applicable",
+          "external": "not_applicable",
+          "internal_resampling_without_training_test_split": "not_applicable",
+          "internal_training_test_split": "applicable"
+        },
+        "uncertain_design": "Do not automatically assign not_applicable if the evaluation component or split design is unclear; use no_information or flag for reviewer clarification.",
+        "source": "PROBAST+AI Supplementary Table 4, PE-4.5, p. 15",
+        "machine_checkable": "Partially; requires reviewer-verified evaluation-component and split-design classification."
       },
       "lineage": {
         "probast_2019": "None",
@@ -487,7 +582,7 @@
           "source": "Moons et al, BMJ 2025;388:e082505, p. 10"
         }
       ],
-      "official_guidance_status": "Supplementary table 4 (Explanation and Elaboration Light) not extracted. Add its guidance for this question before relying on modelaudit.evidence_focus.",
+      "official_guidance_status": "Reviewed and summarized from PROBAST+AI Supplementary Table 4 (Explanation and Elaboration Light); see official_guidance.source.",
       "modelaudit": {
         "origin": "ModelAudit operational content. Not official PROBAST+AI text.",
         "evidence_focus": [
@@ -507,6 +602,19 @@
         "depends_on": [
           "study_profile.data_splitting"
         ]
+      },
+      "official_guidance": {
+        "summary": "This question concerns data leakage when a training/test split was used. Applicability depends on the evaluation component and actual validation design.",
+        "points": [
+          "Data leakage occurs when information from evaluation/test data influences development or evaluation procedures in a way that can make performance estimates optimistic.",
+          "Examples include participants or records appearing across training and test sets, or preprocessing, feature selection, or other data-dependent development decisions being performed on the full dataset before splitting.",
+          "For internal validation using a training/test split, assess whether the split and subsequent workflow prevented leakage.",
+          "For internal validation using resampling without a training/test split, this split-specific question is not applicable; PE-4.6 (omitted from this subset) addresses repetition of development steps within resampling.",
+          "For apparent performance and external validation, PE-4.5 is not applicable according to the E&E guidance.",
+          "If the report does not establish the evaluation component or whether an internal training/test split was used, do not automatically assign Not applicable. Use No information or flag for reviewer clarification.",
+          "Absence of a reported leakage event is not evidence that leakage was avoided; examine the split and timing of preprocessing and development decisions."
+        ],
+        "source": "PROBAST+AI Supplementary Table 4, Explanation and Elaboration Light, PE-4.5, p. 15"
       }
     },
     {
@@ -534,7 +642,7 @@
           "source": "Moons et al, BMJ 2025;388:e082505, Box 1, p. 4"
         }
       ],
-      "official_guidance_status": "Supplementary table 4 (Explanation and Elaboration Light) not extracted. Add its guidance for this question before relying on modelaudit.evidence_focus.",
+      "official_guidance_status": "Reviewed and summarized from PROBAST+AI Supplementary Table 4 (Explanation and Elaboration Light); see official_guidance.source.",
       "modelaudit": {
         "origin": "ModelAudit operational content. Not official PROBAST+AI text.",
         "evidence_focus": [
@@ -552,6 +660,19 @@
           "This is distinct from TRIPOD+AI item 12e, which concerns whether measures are specified in the Methods."
         ],
         "depends_on": []
+      },
+      "official_guidance": {
+        "summary": "Assess whether predictive performance was evaluated with appropriate measures and methods. Calibration and discrimination are complementary; net benefit/clinical usefulness is also relevant where appropriate.",
+        "points": [
+          "Consider calibration (agreement between predicted and observed risks) and discrimination (ability to distinguish participants with and without the outcome). Both should be assessed using appropriate methods.",
+          "Calibration plots are generally more informative than relying only on a goodness-of-fit test; assess the method, not merely whether a statistic is named.",
+          "Consider clinical usefulness or net benefit where relevant, for example decision-curve analysis and thresholds tied to the intended decision.",
+          "Do not automatically answer No solely because net benefit is absent; record which measures were assessed and judge appropriateness in context. Absence of calibration or discrimination is more consequential.",
+          "Consider whether threshold-based classification discarded useful information or thresholds were selected in a data-driven manner.",
+          "Consider performance in relevant subgroups where reported or needed to identify important differences or inequities.",
+          "Do not confuse this with reporting transparency about whether measures were prespecified in Methods; this question concerns the appropriateness of the performance evaluation."
+        ],
+        "source": "PROBAST+AI Supplementary Table 4, Explanation and Elaboration Light, PE-4.7, p. 16"
       }
     }
   ],
@@ -579,7 +700,8 @@
         "included": 1,
         "official": 3,
         "complete": false
-      }
+      },
+      "coverage_note": "Coverage is partial. The selected-question count is not the total number of official PROBAST+AI signalling questions. Do not issue an official domain judgement from this subset."
     },
     {
       "id": "D2",
@@ -605,7 +727,8 @@
         "included": 1,
         "official": 4,
         "complete": false
-      }
+      },
+      "coverage_note": "Coverage is partial. The selected-question count is not the total number of official PROBAST+AI signalling questions. Do not issue an official domain judgement from this subset."
     },
     {
       "id": "D3",
@@ -631,7 +754,8 @@
         "included": 1,
         "official": 4,
         "complete": false
-      }
+      },
+      "coverage_note": "Coverage is partial. The selected-question count is not the total number of official PROBAST+AI signalling questions. Do not issue an official domain judgement from this subset."
     },
     {
       "id": "D4",
@@ -664,7 +788,8 @@
         "included": 5,
         "official": 7,
         "complete": false
-      }
+      },
+      "coverage_note": "Coverage is partial. The selected-question count is not the total number of official PROBAST+AI signalling questions. Do not issue an official domain judgement from this subset."
     }
   ],
   "modelaudit_global_rules": [
@@ -672,6 +797,47 @@
     "no_information and not_assessed are different. not_assessed means the system did not run the question. no_information is an official answer meaning the paper gave too little to judge.",
     "A quotation that exists in the paper does not by itself show that it supports the answer.",
     "Never state or imply that a model is clinically valid, safe or ready for use.",
-    "Do not use TRIPOD+AI reporting categories. PROBAST+AI answers use the official response scale only."
+    "Do not use TRIPOD+AI reporting categories. PROBAST+AI answers use the official response scale only.",
+    {
+      "id": "MA-EVIDENCE-REASONING",
+      "origin": "ModelAudit engineering safeguard; not an official PROBAST+AI rule.",
+      "rule": "A quotation is required for an assessed answer under the current MVP evidence policy, but quotation presence or lexical matching is not sufficient to justify the answer.",
+      "requirements": [
+        "Explain how the quoted passage supports or contradicts the signalling question.",
+        "Interpret the passage in context; do not rely on isolated keyword matches.",
+        "Distinguish direct evidence, reasonable interpretation, absence of reported information, and reviewer-dependent judgement.",
+        "A passage that merely mentions a topic is not proof that the relevant method was performed appropriately.",
+        "If retrieved evidence is ambiguous, incomplete, or insufficient, use No information or refer the finding for human review.",
+        "Quote existence in the PDF is a source-integrity check, not semantic verification."
+      ]
+    },
+    {
+      "id": "MA-OFFICIAL-BOUNDARY",
+      "origin": "ModelAudit engineering safeguard; not an official PROBAST+AI rule.",
+      "rule": "Keep official framework content separate from ModelAudit operational choices.",
+      "requirements": [
+        "Identify official wording, response options, applicability guidance, and E&E summaries as PROBAST+AI source content.",
+        "Label retrieval queries, evidence-focus lists, quote requirements, automated routing, and product limitations as ModelAudit operational content.",
+        "Never describe this eight-question subset as the complete PROBAST+AI tool."
+      ]
+    }
+  ],
+  "omitted_questions": [
+    {
+      "id": "PE-4.4",
+      "official_wording": "If class imbalance correction was used during model development, was the evaluation done in data without imbalance correction?",
+      "domain_id": "D4",
+      "status": "not_in_selected_subset",
+      "coverage_implication": "The subset does not assess whether evaluation data retained the natural outcome distribution after class-imbalance correction during development.",
+      "source": "PROBAST+AI Supplementary Table 3 and Supplementary Table 4, PE-4.4, p. 15"
+    },
+    {
+      "id": "PE-4.6",
+      "official_wording": "If resampling was done, were all steps in the development process appropriately repeated?",
+      "domain_id": "D4",
+      "status": "not_in_selected_subset",
+      "coverage_implication": "The subset does not assess whether all development steps (such as imputation, variable selection, hyperparameter tuning, and model fitting) were repeated within each resample. This is a material limitation for resampling-based internal validation.",
+      "source": "PROBAST+AI Supplementary Table 3 and Supplementary Table 4, PE-4.6, p. 16"
+    }
   ]
 }
